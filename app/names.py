@@ -34,9 +34,10 @@ def config() -> dict:
         "base_url": os.getenv("LLM_BASE_URL", "http://localhost:11434/v1").rstrip("/"),
         "model": os.getenv("LLM_MODEL", "gemma3:4b"),
         "api_key": os.getenv("LLM_API_KEY", "ollama"),
-        "timeout": float(os.getenv("LLM_TIMEOUT", "120")),
+        # On a laptop with no GPU one batch takes minutes, and the first call also loads the model.
+        "timeout": float(os.getenv("LLM_TIMEOUT", "600")),
         "min_interval": float(os.getenv("LLM_MIN_INTERVAL", "0")),
-        "batch": int(os.getenv("LLM_BATCH", "25")),
+        "batch": int(os.getenv("LLM_BATCH", "10")),
     }
 
 
