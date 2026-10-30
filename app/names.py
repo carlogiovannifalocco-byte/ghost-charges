@@ -63,24 +63,44 @@ def _chat(prompt: str) -> str:
     if wait > 0:
         time.sleep(wait)
     _last[0] = time.monotonic()
-    r = httpx.post(f"{cfg['base_url']}/chat/completions",
-                   headers={"Authorization": f"Bearer {cfg['api_key']}"},
-                   json={"model": cfg["model"], "temperature": 0, "messages": [{"role": "user", "content": prompt}]},
-                   timeout=cfg["timeout"])
+    body = {"model": cfg["model"], "temperature": 0, "messages": [{"role": "user", "content": prompt}],
+            "response_format": {"type": "json_object"}}
+    headers = {"Authorization": f"Bearer {cfg['api_key']}"}
+    r = httpx.post(f"{cfg['base_url']}/chat/completions", headers=headers, json=body, timeout=cfg["timeout"])
+    if r.status_code == 400:  # some endpoints refuse JSON mode: ask again without it
+        del body["response_format"]
+        r = httpx.post(f"{cfg['base_url']}/chat/completions", headers=headers, json=body, timeout=cfg["timeout"])
     r.raise_for_status()
     return r.json()["choices"][0]["message"]["content"] or ""
 
 
 def parse_json(text: str) -> dict:
-    text = re.sub(r"^```(?:json)?|```$", "", text.strip(), flags=re.M).strip()
-    start, end = text.find("{"), text.rfind("}")
-    if start < 0 or end <= start:
-        return {}
-    try:
-        data = json.loads(text[start:end + 1])
-    except json.JSONDecodeError:
-        return {}
-    return data if isinstance(data, dict) else {}
+    """The JSON object in a model's reply, past any thinking block, code fence or sentence around it.
+    An answer given as a list ([{"key": ..., "merchant": ...}]) is turned into the same {key: ...} shape."""
+    text = re.sub(r"<(think|thought|thinking)>.*?</\1>", "", text, flags=re.S | re.I)
+    decoder, best, i = json.JSONDecoder(), None, 0
+    while True:
+        starts = [p for p in (text.find("{", i), text.find("[", i)) if p >= 0]
+        if not starts:
+            break
+        i = min(starts)
+        try:
+            value, end = decoder.raw_decode(text, i)
+        except json.JSONDecodeError:
+            i += 1
+            continue
+        if value and isinstance(value, (dict, list)):
+            best = value  # the last one wins: earlier ones are drafts
+        i = end
+    if isinstance(best, list):
+        return {str(x.get("key")): x for x in best if isinstance(x, dict) and x.get("key")}
+    if isinstance(best, dict) and len(best) == 1 and isinstance(next(iter(best.values())), (dict, list)):
+        only = next(iter(best.values()))  # {"merchants": {...}} or {"results": [...]}
+        if isinstance(only, list):
+            return {str(x.get("key")): x for x in only if isinstance(x, dict) and x.get("key")}
+        if only and all(isinstance(v, dict) for v in only.values()):
+            return only
+    return best if isinstance(best, dict) else {}
 
 
 def _letters(s: str) -> str:
@@ -122,8 +142,9 @@ def name_merchants(groups: dict[str, list[str]]) -> tuple[dict[str, dict], dict]
         except (httpx.HTTPError, KeyError, ValueError):
             stats["errors"] += len(chunk)
             continue
+        folded = {_letters(str(a)): v for a, v in answer.items()}  # keys come back in another case or spacing
         for k in chunk:
-            got = answer.get(k)
+            got = answer.get(k) or folded.get(_letters(k))
             if not isinstance(got, dict) or not isinstance(got.get("merchant"), str) or not got["merchant"].strip():
                 stats["no_answer"] += 1
                 continue
