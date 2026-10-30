@@ -6,178 +6,158 @@
 <meta name="color-scheme" content="light dark">
 <title>Ghost Charges</title>
 <meta name="description" content="Find the subscriptions that keep charging a bank account, including the account of someone who has died, with an open-weight model on your own machine.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f4a3f'/%3E%3Cpath d='M16 7c-4 0-6.5 3-6.500 6.800V24l2.200-1.600 2.100 1.600 2.200-1.600 2.200 1.600 2.100-1.600L22.500 24V13.800C22.500 10 20 7 16 7z' fill='%23f6f1e7'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23111'/%3E%3Cpath d='M6 21c6-1 8-12 13-12 3 0 2 8 7 7' fill='none' stroke='%2393adff' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
-/* Direction: a quiet ledger. Warm paper, one deep green, a serif for what matters. Nothing bounces. */
-:root {
-  --bg: #f6f1e7; --surface: #fffdf8; --sunk: #efe8da; --text: #27231c; --muted: #6d6556; --faint: #94897a;
-  --ring: rgba(39,35,28,.12); --accent: #2f4a3f; --accent-ink: #fffdf8; --accent-soft: #e2e9e2;
-  --warn: #99540f; --warn-soft: #f6e5cd; --bad: #a33a2c; --bad-soft: #f6dfd9; --quiet: #5c5470; --quiet-soft: #e9e5ee;
-  --elev: 0 1px 2px rgba(39,35,28,.05), 0 0 0 1px var(--ring); --elev-2: 0 14px 34px -18px rgba(39,35,28,.35), 0 0 0 1px var(--ring);
-  --r-lg: 18px; --r-md: 12px; --r-sm: 8px; --ease: cubic-bezier(.22,1,.36,1);
-  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
-}
-@media (prefers-color-scheme: dark) {
-  :root { --bg: #15140f; --surface: #1e1c16; --sunk: #272419; --text: #eee8db; --muted: #aea491; --faint: #877d6c;
-    --ring: rgba(255,245,225,.1); --accent: #a9cdb8; --accent-ink: #16211b; --accent-soft: #26332b;
-    --warn: #e6b070; --warn-soft: #3a2c19; --bad: #ee9c8e; --bad-soft: #3d2320; --quiet: #bdb3d4; --quiet-soft: #2d2936;
-    --elev: 0 0 0 1px var(--ring); --elev-2: 0 16px 40px -18px #000, 0 0 0 1px var(--ring); }
-}
+/* The idea: the statement is the interface. A biro circles the lines, writes what they are, strikes them out.
+   Fonts (all OFL, self-hosted): Schibsted Grotesk, IBM Plex Mono, Caveat. */
+@font-face { font-family: "Schibsted Grotesk"; src: url(/fonts/schibsted-grotesk-latin-wght-normal.woff2) format("woff2"); font-weight: 400 900; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url(/fonts/ibm-plex-mono-latin-400-normal.woff2) format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url(/fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Caveat"; src: url(/fonts/caveat-latin-600-normal.woff2) format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Caveat"; src: url(/fonts/caveat-latin-700-normal.woff2) format("woff2"); font-weight: 700; font-display: swap; }
+:root { --paper: #ffffff; --desk: #e9e9e6; --ink: #111111; --ink-2: #555555; --rule: #d6d6d2; --rule-2: #111111; --pen: #1b3fd1; --pen-soft: #e8ecfc; --flag: #c4260f;
+  --sans: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif; --mono: "IBM Plex Mono", Consolas, monospace; --hand: "Caveat", "Segoe Print", cursive; --ease: cubic-bezier(.22,1,.36,1); }
+@media (prefers-color-scheme: dark) { :root { --paper: #17171a; --desk: #0c0c0e; --ink: #f2f2ee; --ink-2: #a6a6a0; --rule: #33333a; --rule-2: #f2f2ee; --pen: #93adff; --pen-soft: #1e2440; --flag: #ff8d78; } }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--text); font: 16px/1.55 var(--sans); }
-.wrap { max-width: 840px; margin: 0 auto; padding: 0 16px 120px; }
-h1, h2, h3 { font-family: var(--serif); font-weight: 500; letter-spacing: -.01em; text-wrap: balance; margin: 0; }
-p { text-wrap: pretty; }
-.ic { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+body { margin: 0; min-height: 100vh; background: var(--desk); color: var(--ink); font: 400 17px/1.5 var(--sans); }
 [hidden] { display: none !important; }
-.num { font-variant-numeric: tabular-nums; }
+:focus-visible { outline: 3px solid var(--pen); outline-offset: 2px; }
+h1, h2, p { margin: 0; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px 120px; }
+header { display: flex; align-items: baseline; gap: 16px; padding: 22px 0; }
+.brand { font-weight: 800; font-size: 20px; letter-spacing: -.02em; }
+.status { margin-left: auto; font: 400 12px var(--mono); color: var(--ink-2); }
 
-/* Header */
-header { display: flex; align-items: center; gap: 10px; padding: 18px 0; }
-.mark { width: 30px; height: 30px; border-radius: 9px; background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; }
-.mark svg { width: 20px; height: 20px; }
-.brand { font: 500 19px var(--serif); }
-.status { margin-left: auto; display: inline-flex; align-items: center; gap: 7px; font-size: 13px; color: var(--muted); }
-.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--faint); } .dot.ok { background: #4c9a6e; } .dot.warn { background: #c98a2e; }
-
-/* Start */
-.hero { padding: 34px 0 20px; }
-.hero h1 { font-size: clamp(34px, 7vw, 50px); line-height: 1.08; }
-.hero .lede { font-size: 18px; color: var(--muted); max-width: 620px; margin: 14px 0 0; }
-.panel { background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--elev-2); padding: 20px; }
-.panel .q { font-weight: 600; margin: 0 0 10px; }
-.seg { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; border-radius: var(--r-md); background: var(--sunk); }
-.seg button { min-height: 44px; border: 0; border-radius: 9px; background: none; color: var(--muted); font: 600 15px var(--sans); cursor: pointer; transition: background-color 150ms var(--ease), color 150ms var(--ease); }
-.seg button[aria-pressed="true"] { background: var(--surface); color: var(--text); box-shadow: var(--elev); }
-.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
-.fields label { display: flex; flex-direction: column; gap: 5px; font-size: 14px; font-weight: 600; }
-input.f, select.f, textarea.f { width: 100%; min-height: 44px; padding: 9px 12px; border: 0; border-radius: var(--r-sm); background: var(--sunk); color: var(--text); font: 16px var(--sans); box-shadow: inset 0 0 0 1px var(--ring); }
-input.f:focus, select.f:focus, textarea.f:focus { outline: none; box-shadow: inset 0 0 0 2px var(--accent); }
-.gentle { margin: 12px 0 0; font-size: 14px; color: var(--muted); }
-.drop { display: flex; align-items: center; gap: 14px; margin-top: 16px; padding: 18px; border-radius: var(--r-md); background: var(--sunk); box-shadow: inset 0 0 0 1px var(--ring); cursor: pointer; transition: box-shadow 150ms var(--ease); }
-.drop.over, .drop:hover { box-shadow: inset 0 0 0 2px var(--accent); }
-.drop .i { width: 44px; height: 44px; flex: none; border-radius: 12px; display: grid; place-items: center; background: var(--surface); color: var(--accent); box-shadow: var(--elev); }
-.drop b { display: block; font-size: 17px; } .drop small { color: var(--muted); font-size: 14px; }
+/* Start: headline and action on the left, the statement itself on the right */
+.start { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: start; padding-top: 28px; }
+h1 { font-weight: 800; font-size: clamp(44px, 6.4vw, 84px); line-height: .98; letter-spacing: -.035em; text-wrap: balance; }
+.lede { margin-top: 20px; max-width: 30em; font-size: 19px; color: var(--ink-2); text-wrap: pretty; }
+.who { margin-top: 30px; }
+.who p { font-weight: 700; margin-bottom: 8px; }
+.seg { display: flex; flex-wrap: wrap; gap: 0; border: 2px solid var(--ink); width: fit-content; max-width: 100%; }
+.seg button { min-height: 46px; padding: 0 18px; border: 0; background: none; color: var(--ink); font: 600 16px var(--sans); cursor: pointer; }
+.seg button + button { border-left: 2px solid var(--ink); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+.fields label { display: flex; flex-direction: column; gap: 4px; font-weight: 600; font-size: 15px; }
+input.f, select.f, textarea.f { width: 100%; min-height: 46px; padding: 9px 11px; border: 0; border-bottom: 2px solid var(--ink); border-radius: 0; background: var(--paper); color: var(--ink); font: 400 17px var(--sans); }
+input.f:focus, select.f:focus, textarea.f:focus { outline: none; border-bottom-color: var(--pen); box-shadow: 0 2px 0 var(--pen); }
+.gentle { margin-top: 12px; color: var(--ink-2); font-size: 16px; max-width: 32em; }
+.drop { display: block; margin-top: 22px; padding: 20px 22px; background: var(--ink); color: var(--paper); cursor: pointer; transition: background-color 150ms var(--ease); }
+.drop:hover, .drop.over { background: var(--pen); color: #fff; }
+.drop b { display: block; font-size: 21px; font-weight: 700; letter-spacing: -.01em; } .drop small { font-size: 15px; opacity: .8; }
 .drop input { display: none; }
-.under { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-top: 14px; }
-.link { border: 0; background: none; padding: 8px 0; color: var(--accent); font: 600 15px var(--sans); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
-details.help { font-size: 14px; color: var(--muted); } details.help summary { cursor: pointer; padding: 8px 0; }
-.err { color: var(--bad); margin: 10px 0 0; min-height: 1.4em; font-weight: 600; }
-.trust { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 26px 0 0; padding: 0; list-style: none; font-size: 14px; color: var(--muted); }
-.trust li { display: flex; gap: 10px; } .trust .ic { color: var(--accent); margin-top: 2px; } .trust b { display: block; color: var(--text); }
-.loading { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 70px 0; color: var(--muted); }
-.spin { animation: spin 1.1s linear infinite; } @keyframes spin { to { transform: rotate(360deg); } }
+.err { color: var(--flag); font-weight: 600; min-height: 1.5em; margin-top: 8px; }
+.under { display: flex; flex-wrap: wrap; gap: 4px 22px; align-items: center; }
+.link { border: 0; background: none; padding: 8px 0; color: var(--ink); font: 600 16px var(--sans); cursor: pointer; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+details.help { color: var(--ink-2); font-size: 15px; max-width: 34em; } details.help summary { cursor: pointer; padding: 8px 0; font-weight: 600; color: var(--ink); }
+.privacy { margin-top: 18px; font-size: 15px; color: var(--ink-2); max-width: 32em; }
+
+/* The sheet: a piece of statement with the pen on it */
+.sheet { background: var(--paper); padding: 22px 24px 26px; }
+.sheet .bankhead { display: flex; justify-content: space-between; font: 500 12px var(--mono); padding-bottom: 8px; border-bottom: 2px solid var(--ink); }
+.line { position: relative; display: grid; grid-template-columns: 62px minmax(0, 1fr) auto; gap: 10px; padding: 11px 0 26px; border-bottom: 1px solid var(--rule); font: 400 13px/1.4 var(--mono); }
+.line .am { text-align: right; font-weight: 500; }
+.note { position: absolute; left: 72px; bottom: 1px; font: 700 24px/1 var(--hand); color: var(--pen); transform: rotate(-1.2deg); transform-origin: left; }
+.circle { position: absolute; pointer-events: none; color: var(--pen); overflow: visible; }
+.draw path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: pen 900ms var(--ease) forwards; }
+@keyframes pen { to { stroke-dashoffset: 0; } }
+
+.loading { padding: 80px 0; font-size: 22px; font-weight: 700; letter-spacing: -.01em; } .loading small { display: block; font-weight: 400; font-size: 16px; color: var(--ink-2); letter-spacing: 0; }
 
 /* Results */
-.tally { padding: 18px 0 8px; }
-.tally .k { color: var(--muted); }
-.tally .v { font: 500 clamp(44px, 11vw, 68px)/1.05 var(--serif); letter-spacing: -.02em; margin: 2px 0 0; font-variant-numeric: tabular-nums; }
-.facts { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 12px 0 0; padding: 0; list-style: none; color: var(--muted); font-size: 15px; }
-.facts b { color: var(--text); font-weight: 600; }
-.sec { display: flex; align-items: baseline; flex-wrap: wrap; gap: 2px 10px; margin: 30px 0 10px; }
-.sec h2 { font-size: 24px; } .sec span { color: var(--muted); font-size: 14px; }
-.ledger { background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--elev); overflow: hidden; }
-.row { display: grid; grid-template-columns: 52px minmax(0, 1fr); border-top: 1px solid var(--ring); }
-.row:first-child { border-top: 0; }
-.tick { display: grid; place-items: start center; padding: 18px 0 0 6px; border: 0; background: none; color: var(--faint); cursor: pointer; }
-.tick i { width: 24px; height: 24px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px var(--faint); display: grid; place-items: center; color: transparent; transition: background-color 150ms var(--ease), box-shadow 150ms var(--ease); }
-.tick .ic { width: 15px; height: 15px; stroke-width: 2.5; }
-.tick[aria-pressed="true"] i { background: var(--accent); box-shadow: none; color: var(--accent-ink); }
-.row details { min-width: 0; }
-.row summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: minmax(0, 1fr) auto 22px; gap: 2px 12px; padding: 14px 14px 14px 0; }
+.doc { background: var(--paper); padding: 34px 40px 40px; margin-top: 6px; }
+.tally { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 40px; align-items: end; padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+.tally .k { font-weight: 600; font-size: 18px; }
+.tally .v { font-weight: 800; font-size: clamp(56px, 11vw, 112px); line-height: 1; letter-spacing: -.04em; position: relative; width: fit-content; }
+.under-pen { position: absolute; left: 0; right: 0; bottom: -10px; height: 14px; width: 100%; color: var(--pen); overflow: visible; }
+.facts { list-style: none; margin: 0; padding: 0; font: 400 14px/1.7 var(--mono); text-align: right; white-space: nowrap; }
+.facts b { font-weight: 500; }
+.sec { display: flex; align-items: baseline; flex-wrap: wrap; gap: 2px 14px; margin-top: 34px; padding-bottom: 8px; border-bottom: 2px solid var(--ink); }
+.sec h2 { font-size: 26px; font-weight: 800; letter-spacing: -.02em; } .sec span { color: var(--ink-2); font-size: 15px; }
+.row { position: relative; border-bottom: 1px solid var(--rule); }
+.row summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 44px minmax(0, 1fr) auto 18px; gap: 0 12px; align-items: start; padding: 14px 0 12px; }
 .row summary::-webkit-details-marker { display: none; }
-.row .name { font: 500 19px/1.25 var(--serif); overflow-wrap: anywhere; }
-.row .amount { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.row .amount small { display: block; color: var(--muted); font-size: 13px; font-weight: 400; }
-.row .chev { color: var(--faint); transition: transform 200ms var(--ease); align-self: start; margin-top: 3px; }
-.row details[open] .chev { transform: rotate(180deg); }
-.row .bank { grid-column: 1 / 2; margin: 2px 0 0; font: 12.5px/1.45 var(--mono); color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.row details[open] .bank { white-space: normal; overflow-wrap: anywhere; }
-.chips { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
-.chip { display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: 99px; font-size: 13px; background: var(--sunk); color: var(--muted); }
-.chip .ic { width: 13px; height: 13px; }
-.chip.rise { background: var(--warn-soft); color: var(--warn); } .chip.trial { background: var(--quiet-soft); color: var(--quiet); } .chip.since { background: var(--bad-soft); color: var(--bad); }
-.row.done .name { text-decoration: line-through; text-decoration-color: var(--faint); color: var(--muted); }
-.more { padding: 0 14px 16px 0; }
-.bars { display: flex; align-items: flex-end; gap: 3px; height: 38px; }
-.bars i { flex: 1; min-height: 3px; border-radius: 3px 3px 1px 1px; background: var(--sunk); } .bars i.on { background: var(--accent); } .bars i.up { background: var(--warn); } .bars i.after { background: var(--bad); }
-.barlabels { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-top: 3px; }
-.kv { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 14px 0 0; }
-.kv dt { color: var(--muted); font-size: 13px; } .kv dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 16px; border: 0; border-radius: var(--r-md); background: var(--sunk); color: var(--text); font: 600 15px var(--sans); cursor: pointer; text-decoration: none; transition: transform 120ms var(--ease), opacity 150ms var(--ease); }
-.btn:active { transform: scale(.97); } .btn:disabled { opacity: .5; cursor: default; }
-.btn.primary { background: var(--accent); color: var(--accent-ink); }
-.btn-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-details.charges { margin-top: 12px; font-size: 14px; } details.charges summary { display: block; padding: 6px 0; color: var(--accent); font-weight: 600; }
-details.charges table { width: 100%; border-collapse: collapse; font-size: 13px; }
-details.charges td { padding: 6px 4px; border-top: 1px solid var(--ring); vertical-align: top; }
-details.charges td:nth-child(2) { font-family: var(--mono); font-size: 12px; color: var(--muted); overflow-wrap: anywhere; }
-details.charges td:last-child { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.simple .item { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; padding: 12px 16px; border-top: 1px solid var(--ring); }
-.simple .item:first-child { border-top: 0; } .simple .grow { flex: 1; min-width: 200px; } .simple small { display: block; color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
-.closing { margin: 34px auto 0; max-width: 560px; text-align: center; color: var(--muted); }
-.closing b { display: block; font: 500 24px/1.3 var(--serif); color: var(--text); margin-bottom: 8px; text-wrap: balance; }
-.how { margin-top: 28px; font-size: 14px; color: var(--muted); } .how summary { cursor: pointer; color: var(--text); font-weight: 600; padding: 8px 0; } .how li { margin: 6px 0; }
-.again { margin-top: 18px; }
-.bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; background: var(--surface); box-shadow: 0 -1px 0 var(--ring), 0 -10px 30px -18px rgba(0,0,0,.4); padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); }
-.bar .in { max-width: 840px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
-.bar .txt { flex: 1; min-width: 200px; font-size: 15px; } .bar .prog { height: 4px; border-radius: 2px; background: var(--sunk); overflow: hidden; margin-top: 5px; }
-.bar .prog div { height: 100%; background: var(--accent); transform-origin: left; transition: transform 250ms var(--ease); }
-dialog { width: min(640px, calc(100vw - 24px)); padding: 0; border: 0; border-radius: var(--r-lg); background: var(--surface); color: var(--text); box-shadow: var(--elev-2); }
-dialog::backdrop { background: rgba(20,17,12,.55); }
-dialog form { display: flex; flex-direction: column; gap: 14px; padding: 20px; }
-dialog h2 { font-size: 24px; } dialog textarea.f { min-height: 280px; font-size: 14px; line-height: 1.55; resize: vertical; }
-dialog .note { margin: 0; color: var(--muted); font-size: 14px; }
-footer { margin-top: 40px; text-align: center; color: var(--faint); font-size: 13px; }
-@media (max-width: 640px) {
-  .fields, .trust { grid-template-columns: 1fr; }
-  .kv { grid-template-columns: 1fr 1fr; }
-  .row { grid-template-columns: 46px minmax(0, 1fr); }
-  .hero { padding-top: 16px; }
+.tick { position: absolute; left: 0; top: 8px; z-index: 2; width: 44px; height: 44px; padding: 0; border: 0; background: none; color: var(--ink); cursor: pointer; display: grid; place-items: center; }
+.tick svg { width: 26px; height: 26px; overflow: visible; }
+.tick .tk { color: var(--pen); opacity: 0; } .tick[aria-pressed="true"] .tk { opacity: 1; }
+.row .main { grid-column: 2; min-width: 0; }
+.row .bank { display: block; position: relative; width: fit-content; max-width: 100%; font: 400 14px/1.45 var(--mono); overflow-wrap: anywhere; }
+.row .name { display: block; font: 700 28px/1.05 var(--hand); color: var(--pen); margin-top: 2px; transform: rotate(-.6deg); transform-origin: left; }
+.row.done .bank { color: var(--ink-2); text-decoration: line-through 2px var(--pen); }
+.row .amount { grid-column: 3; text-align: right; font: 500 16px/1.3 var(--mono); white-space: nowrap; }
+.row .amount small { display: block; font: 400 12px var(--mono); color: var(--ink-2); }
+.row .chev { grid-column: 4; align-self: start; margin-top: 4px; font: 500 18px/1 var(--mono); color: var(--ink-2); }
+.row details[open] .chev { color: var(--ink); }
+.marks { grid-column: 2 / -1; display: flex; flex-wrap: wrap; gap: 2px 16px; margin-top: 4px; font: 400 13px var(--mono); }
+.mk.since { color: var(--flag); } .mk.rise { color: var(--flag); } .mk.trial { color: var(--ink-2); }
+.more { padding: 4px 0 18px 56px; }
+.bars { display: flex; align-items: flex-end; gap: 3px; height: 40px; max-width: 520px; }
+.bars i { flex: 1; min-height: 2px; background: var(--rule); } .bars i.on { background: var(--ink); } .bars i.after { background: var(--flag); } .bars i.up { background: var(--ink); }
+.barlabels { display: flex; justify-content: space-between; max-width: 520px; font: 400 12px var(--mono); color: var(--ink-2); margin-top: 4px; }
+.kv { display: flex; flex-wrap: wrap; gap: 6px 34px; margin: 14px 0 0; font: 400 14px var(--mono); }
+.kv dt { color: var(--ink-2); font-size: 12px; } .kv dd { margin: 0; font-weight: 500; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 0 18px; border: 2px solid var(--ink); background: none; color: var(--ink); font: 700 16px var(--sans); cursor: pointer; text-decoration: none; }
+.btn.primary { background: var(--ink); color: var(--paper); }
+.btn:active { transform: translateY(1px); } .btn:disabled { opacity: .5; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+details.charges { margin-top: 12px; } details.charges summary { display: block; cursor: pointer; padding: 6px 0; font-weight: 600; font-size: 15px; }
+details.charges table { width: 100%; border-collapse: collapse; font: 400 12.5px var(--mono); }
+details.charges td { padding: 5px 8px 5px 0; border-top: 1px solid var(--rule); vertical-align: top; overflow-wrap: anywhere; }
+details.charges td:first-child { white-space: nowrap; } details.charges td:last-child { text-align: right; white-space: nowrap; padding-right: 0; }
+.simple .item { display: flex; flex-wrap: wrap; gap: 2px 16px; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--rule); font: 400 14px var(--mono); }
+.simple .grow { flex: 1; min-width: 220px; overflow-wrap: anywhere; } .simple b { font-weight: 500; }
+.simple small { display: block; color: var(--ink-2); font-size: 12.5px; }
+.closing { margin-top: 44px; max-width: 34em; font-size: 18px; color: var(--ink-2); }
+.closing b { display: block; font: 700 38px/1.05 var(--hand); color: var(--pen); margin-bottom: 8px; }
+.how { margin-top: 28px; font-size: 15px; color: var(--ink-2); max-width: 46em; } .how summary { cursor: pointer; font-weight: 600; color: var(--ink); padding: 8px 0; } .how li { margin: 6px 0; }
+.again { margin-top: 22px; }
+.bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; background: var(--ink); color: var(--paper); padding: 10px 24px calc(10px + env(safe-area-inset-bottom)); }
+.bar .in { max-width: 1072px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px; }
+.bar .in { flex-wrap: nowrap; } .bar .txt { flex: 1; min-width: 0; font-weight: 600; line-height: 1.25; } .bar .btn { flex: none; border-color: var(--paper); color: var(--paper); min-height: 42px; padding: 0 12px; font-size: 15px; }
+dialog { width: min(640px, calc(100vw - 24px)); padding: 0; border: 2px solid var(--ink); border-radius: 0; background: var(--paper); color: var(--ink); }
+dialog::backdrop { background: rgba(0,0,0,.6); }
+dialog form { display: flex; flex-direction: column; gap: 14px; padding: 22px; }
+dialog h2 { font-size: 28px; font-weight: 800; letter-spacing: -.02em; }
+dialog textarea.f { min-height: 280px; font: 400 14px/1.55 var(--mono); border: 1px solid var(--rule); resize: vertical; }
+dialog .note { color: var(--ink-2); font-size: 15px; margin: 0; }
+footer { margin-top: 36px; font-size: 14px; color: var(--ink-2); }
+@media (max-width: 860px) {
+  .start { grid-template-columns: 1fr; gap: 34px; padding-top: 8px; }
+  .wrap { padding: 0 16px 120px; }
+  .doc { padding: 22px 16px 26px; margin: 6px -16px 0; }
+  .tally { grid-template-columns: 1fr; } .facts { text-align: left; white-space: normal; margin-top: 16px; }
+  .more { padding-left: 0; }
+  .fields { grid-template-columns: 1fr; }
+  .sheet { padding: 16px; margin: 0 -16px; }
+  .line { grid-template-columns: minmax(0, 1fr) auto; } .line .dt { display: none; } .note { left: 0; }
+  .row .bank { font-size: 13px; }
+  .row summary { grid-template-columns: 44px minmax(0, 1fr) auto 14px; gap: 0 8px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { transition-duration: 0ms !important; }
-  .spin { animation: none; } .btn:active { transform: none; }
+  .draw path { animation: none; stroke-dashoffset: 0; } .strike path { transition: none; } .btn:active { transform: none; }
 }
-@media print { header, .bar, .again, .tick, .panel { display: none; } }
+@media print { header, .bar, .again, .tick { display: none; } body { background: #fff; } .doc { padding: 0; } }
 </style>
 </head>
 <body>
-<!-- Icons: Lucide (lucide.dev), ISC licence. -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="i-ghost" viewBox="0 0 32 32"><path fill="currentColor" stroke="none" d="M16 5c-5 0-8 3.700-8 8.500V26l2.700-2 2.600 2 2.700-2 2.700 2 2.600-2 2.700 2V13.500C24 8.700 21 5 16 5z"/></symbol>
-  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 3v12" /><path d="m17 8-5-5-5 5" /><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /></symbol>
-  <symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></symbol>
-  <symbol id="i-file-text" viewBox="0 0 24 24"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></symbol>
-  <symbol id="i-send" viewBox="0 0 24 24"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z" /><path d="m21.854 2.147-10.94 10.939" /></symbol>
-  <symbol id="i-loader" viewBox="0 0 24 24"><path d="M12 2v4" /><path d="m16.2 7.8 2.9-2.9" /><path d="M18 12h4" /><path d="m16.2 16.2 2.9 2.9" /><path d="M12 18v4" /><path d="m4.9 19.1 2.9-2.9" /><path d="M2 12h4" /><path d="m4.9 4.9 2.9 2.9" /></symbol>
-  <symbol id="i-refresh-cw" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" /><path d="M21 3v5h-5" /><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" /><path d="M8 16H3v5" /></symbol>
-  <symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></symbol>
-  <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" /></symbol>
-  <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="m5 12 7-7 7 7" /><path d="M12 19V5" /></symbol>
-</svg>
 <div class="wrap">
   <header>
-    <span class="mark"><svg><use href="#i-ghost"/></svg></span>
     <span class="brand">Ghost Charges</span>
-    <span class="status"><span class="dot" id="model-dot"></span><span id="model-text">Checking the model…</span></span>
+    <span class="status"><span id="model-dot" hidden></span><span id="model-text">Checking the model…</span></span>
   </header>
 
-  <section id="start" aria-labelledby="title">
-    <div class="hero">
-      <h1 id="title">Find every charge that keeps coming back.</h1>
-      <p class="lede" id="lede">Forgotten plans, free trials that turned into payments, prices that crept up. Give it a bank statement and see what is still taking money, in plain words.</p>
-    </div>
-    <div class="panel">
-      <p class="q" id="who-q">Whose account is this?</p>
-      <div class="seg" role="group" aria-labelledby="who-q">
-        <button type="button" id="who-mine" aria-pressed="true">Mine</button>
-        <button type="button" id="who-died" aria-pressed="false">Someone who has died</button>
+  <section class="start" id="start" aria-labelledby="title">
+    <div>
+      <h1 id="title">What is this charge?</h1>
+      <p class="lede" id="lede">Banks write in code. Give Ghost Charges a statement and it goes through it line by line, says what each charge really is, and shows you what is still taking money.</p>
+      <div class="who">
+        <p id="who-q">Whose account is it?</p>
+        <div class="seg" role="group" aria-labelledby="who-q">
+          <button type="button" id="who-mine" aria-pressed="true">Mine</button>
+          <button type="button" id="who-died" aria-pressed="false">Someone who has died</button>
+        </div>
       </div>
       <input type="checkbox" id="mourn" hidden>
       <div id="mourn-fields" hidden>
@@ -185,47 +165,53 @@ footer { margin-top: 40px; text-align: center; color: var(--faint); font-size: 1
           <label>Their name<input class="f" id="holder" autocomplete="off" maxlength="80"></label>
           <label>The date they died<input class="f" id="died" type="date"></label>
         </div>
-        <p class="gentle">I'm sorry for your loss. This shows what has been taken since that day, and writes the letter asking each company to close the account and give it back.</p>
+        <p class="gentle">I'm sorry for your loss. You will see what has been taken since that day, and get a letter for each company asking them to close the account and give it back.</p>
       </div>
       <label class="drop" id="drop" tabindex="0">
         <input type="file" id="file" accept=".csv,text/csv,text/plain">
-        <span class="i"><svg class="ic"><use href="#i-upload"/></svg></span>
-        <span><b>Drop the bank statement here</b><small>A CSV file from your bank's website or app, ideally 12 months</small></span>
+        <b>Drop the bank statement here</b>
+        <small>A CSV file from your online bank, ideally 12 months</small>
       </label>
       <p class="err" id="err" role="alert"></p>
       <div class="under">
-        <button class="link" id="try-demo" type="button" hidden>See it with an invented statement</button>
-        <details class="help"><summary>Where do I get a CSV?</summary>Log in to your online bank, open the account's movements or transactions, choose a period and look for Export or Download, then CSV. Every bank calls it something slightly different.</details>
+        <button class="link" id="try-demo" type="button" hidden>See it on an invented statement</button>
+        <details class="help"><summary>Where do I get a CSV?</summary>Log in to your online bank, open the movements or transactions of the account, choose a period and look for Export or Download, then CSV.</details>
       </div>
+      <p class="privacy" id="privacy-text">The statement is read in memory and never saved.</p>
     </div>
-    <ul class="trust">
-      <li><svg class="ic"><use href="#i-lock"/></svg><span><b>Private</b><span id="privacy-text">The statement is read in memory and never saved.</span></span></li>
-      <li><svg class="ic"><use href="#i-file-text"/></svg><span><b>Nothing invented</b>Every amount and date comes from the statement, and code checks them, not the model.</span></li>
-      <li><svg class="ic"><use href="#i-send"/></svg><span><b>Ready to stop</b>A list to tick off, and a letter for each company in five languages.</span></li>
-    </ul>
+    <div class="sheet draw" aria-hidden="true">
+      <div class="bankhead"><span>ACCOUNT STATEMENT</span><span>OCT</span></div>
+      <div class="line"><span class="dt">03/10</span><span>ADDEBITO SDD CORE FITNESS POINT SSD MANDATO FP00231</span><span class="am">-42.00</span><span class="note">the gym</span>
+        <svg class="circle" style="left:64px;top:4px;width:calc(100% - 140px);height:44px" viewBox="0 0 300 44" preserveAspectRatio="none" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"><path pathLength="1" d="M18 8C80 1 230 0 288 9c14 3 12 22-4 27C220 44 60 44 16 34 0 30 2 12 30 6"/></svg></div>
+      <div class="line"><span class="dt">10/10</span><span>PAYPAL *SPOTIFYAB 35314369</span><span class="am">-17.99</span><span class="note" style="animation-delay:.4s">Spotify, still going</span></div>
+      <div class="line"><span class="dt">12/10</span><span>PAGAMENTO POS PADDLE.NET* BABBEL CARTA N. ****4417</span><span class="am">-12.99</span><span class="note">Babbel, a free trial once</span></div>
+      <div class="line"><span class="dt">21/10</span><span>ADDEBITO SDD CORE MEDICI SENZA FRONTIERE</span><span class="am">-15.00</span><span class="note">a donation</span></div>
+      <div class="line"><span class="dt">17/10</span><span>PAGAMENTO POS APPLE.COM/BILL CORK</span><span class="am">-2.99</span><span class="note">iCloud</span></div>
+    </div>
   </section>
 
-  <div class="loading" id="loading" hidden role="status"><svg class="ic spin"><use href="#i-loader"/></svg><span id="loading-text">Reading the statement…</span></div>
+  <div class="loading" id="loading" hidden role="status"><span>Going through the statement.</span><small id="loading-text"></small></div>
 
   <main id="results" hidden>
-    <section class="tally" aria-label="Summary">
-      <div class="k" id="t-k"></div>
-      <p class="v" id="t-v"></p>
-      <ul class="facts" id="facts"></ul>
-    </section>
-    <div class="sec"><h2 id="haunting-title">Still charging</h2><span id="haunting-note"></span></div>
-    <div class="ledger" id="haunting"></div>
-    <div id="dupes-wrap" hidden>
-      <div class="sec"><h2>Charged twice</h2><span>Same company, same amount, within two days</span></div>
-      <div class="ledger simple" id="dupes"></div>
+    <div class="doc">
+      <section class="tally" aria-label="Summary">
+        <div><div class="k" id="t-k"></div><p class="v" id="t-v"></p></div>
+        <ul class="facts" id="facts"></ul>
+      </section>
+      <div class="sec"><h2 id="haunting-title">Still charging</h2><span id="haunting-note"></span></div>
+      <div id="haunting"></div>
+      <div id="dupes-wrap" hidden>
+        <div class="sec"><h2>Charged twice</h2><span>Same company, same amount, within two days</span></div>
+        <div class="simple" id="dupes"></div>
+      </div>
+      <div id="rested-wrap" hidden>
+        <div class="sec"><h2>Already stopped</h2><span>They repeated, then ended</span></div>
+        <div class="simple" id="rested"></div>
+      </div>
+      <div class="closing" id="closing" hidden><b>The memory stays. The charges can stop.</b>If a line means nothing to you, your bank can usually tell you who is behind a direct debit and how to stop it. Read them the words on the statement.</div>
+      <details class="how" id="how"><summary>How this was worked out</summary><ul id="how-list"></ul></details>
     </div>
-    <div id="rested-wrap" hidden>
-      <div class="sec"><h2>Already stopped</h2><span>They repeated, then ended on their own</span></div>
-      <div class="ledger simple" id="rested"></div>
-    </div>
-    <div class="closing" id="closing" hidden><b>The memory stays. The charges can stop.</b>If a line means nothing to you, your bank can usually tell you who is behind a direct debit and how to stop it. Bring the words shown here.</div>
-    <details class="how" id="how"><summary>How this was worked out</summary><ul id="how-list"></ul></details>
-    <div class="again"><button class="btn" id="again" type="button"><svg class="ic"><use href="#i-refresh-cw"/></svg>Check another statement</button></div>
+    <div class="again"><button class="btn" id="again" type="button">Check another statement</button></div>
   </main>
   <footer>Open source. Not legal or financial advice: check everything against the statement.</footer>
 </div>
@@ -240,14 +226,13 @@ footer { margin-top: 40px; text-align: center; color: var(--faint); font-size: 1
   <div class="btn-row" style="margin:0"><button class="btn primary" id="l-write" type="button">Write it</button></div>
   <textarea class="f" id="l-text" aria-label="Letter" hidden></textarea>
   <p class="note" id="l-note"></p>
-  <div class="btn-row" style="margin:0;justify-content:flex-end"><button class="btn" id="l-copy" type="button" hidden><svg class="ic"><use href="#i-copy"/></svg><span>Copy</span></button><button class="btn" value="close">Close</button></div>
+  <div class="btn-row" style="margin:0;justify-content:flex-end"><button class="btn" id="l-copy" type="button" hidden><span>Copy</span></button><button class="btn" value="close">Close</button></div>
 </form></dialog>
 
 <div class="bar" id="bar" hidden><div class="in">
-  <div class="txt"><span id="bar-text"></span><div class="prog" aria-hidden="true"><div id="bar-prog"></div></div></div>
-  <button class="btn" id="copy" type="button"><svg class="ic"><use href="#i-copy"/></svg><span>Copy the list</span></button>
+  <div class="txt"><span id="bar-text"></span></div>
+  <button class="btn" id="copy" type="button"><span>Copy list</span></button>
 </div></div>
-
 <script>
 (() => {
   const $ = (id) => document.getElementById(id);
@@ -267,15 +252,12 @@ footer { margin-top: 40px; text-align: center; color: var(--faint); font-size: 1
     return n;
   }
   const NS = "http://www.w3.org/2000/svg";
-  const icon = (name) => { const s = document.createElementNS(NS, "svg"); s.setAttribute("class", "ic"); s.setAttribute("aria-hidden", "true");
-    const u = document.createElementNS(NS, "use"); u.setAttribute("href", "#i-" + name); s.append(u); return s; };
   const idOf = (g) => g.key + g.cadence + g.amount;
 
   fetch("/api/config").then((r) => r.json()).then((c) => {
     $("try-demo").hidden = !c.demo;
     if (!c.model) { $("model-text").textContent = "Rules only"; $("privacy-text").textContent = "The statement is read in memory and never saved. No model is used."; return; }
-    $("model-dot").className = "dot " + (c.local ? "ok" : "warn");
-    $("model-text").textContent = c.model + (c.local ? ", on this machine" : ", hosted");
+        $("model-text").textContent = c.model + (c.local ? ", on this machine" : ", hosted");
     $("privacy-text").textContent = c.local
       ? "The statement is read in memory and never saved. " + c.model + " runs on this machine, so nothing leaves it."
       : "Hosted demo: read in memory and never saved, but merchant descriptions go to a hosted " + c.model + ". Run it at home to keep everything local.";
@@ -284,9 +266,9 @@ footer { margin-top: 40px; text-align: center; color: var(--faint); font-size: 1
   function setWho(died) {
     $("mourn").checked = died; $("mourn-fields").hidden = !died;
     $("who-mine").setAttribute("aria-pressed", String(!died)); $("who-died").setAttribute("aria-pressed", String(died));
-    $("title").textContent = died ? "Find what is still charging their account." : "Find every charge that keeps coming back.";
-    $("lede").textContent = died ? "Subscriptions don't stop when someone dies. Give it a bank statement and you will see what is still taking money, what each line really is, and a letter to stop it."
-      : "Forgotten plans, free trials that turned into payments, prices that crept up. Give it a bank statement and see what is still taking money, in plain words.";
+    $("title").textContent = died ? "They are gone. The charges aren't." : "What is this charge?";
+    $("lede").textContent = died ? "Subscriptions don't stop when someone dies. Give Ghost Charges their statement and it goes through it for you: what each line really is, what is still taking money, and a letter to stop it."
+      : "Banks write in code. Give Ghost Charges a statement and it goes through it line by line, says what each charge really is, and shows you what is still taking money.";
     if (died) $("holder").focus();
   }
   $("who-mine").addEventListener("click", () => setWho(false));
@@ -295,14 +277,14 @@ footer { margin-top: 40px; text-align: center; color: var(--faint); font-size: 1
   async function run(promise) {
     $("err").textContent = ""; $("loading").hidden = false; $("start").hidden = true; $("results").hidden = true; $("bar").hidden = true;
     const t0 = Date.now();
-    const slow = setInterval(() => { const s = Math.round((Date.now() - t0) / 1000); if (s >= 3) $("loading-text").textContent = `The model is reading the names of the companies… ${s}s. On a laptop this can take a few minutes.`; }, 1000);
+    const slow = setInterval(() => { const s = Math.round((Date.now() - t0) / 1000); if (s >= 3) $("loading-text").textContent = `The model is reading the names of the companies, ${s}s. On a laptop this can take a few minutes.`; }, 1000);
     try {
       const r = await promise; const body = await r.json().catch(() => ({}));
       if (!r.ok) throw new Error(body.detail || "Something went wrong.");
       data = body; stopped = new Set(); render();
       $("results").hidden = false; window.scrollTo({ top: 0 });
     } catch (e) { $("start").hidden = false; $("err").textContent = e.message; }
-    finally { clearInterval(slow); $("loading").hidden = true; $("loading-text").textContent = "Reading the statement…"; }
+    finally { clearInterval(slow); $("loading").hidden = true; $("loading-text").textContent = ""; }
   }
   const DEMO_HOLDER = "Walter Brenner", DEMO_DIED = "2026-05-12";  // the invented account in demo/statement.csv
   function query() {
@@ -347,31 +329,39 @@ footer { margin-top: 40px; text-align: center; color: var(--faint); font-size: 1
       })),
       h("div", { class: "barlabels" }, h("span", null, fmtMonth(ms[0])), data.died ? h("span", null, "red: after they died") : null, h("span", null, fmtMonth(ms[ms.length - 1]))));
   }
+  const svg = (cls, view, d, sw) => { const e = document.createElementNS(NS, "svg"); e.setAttribute("class", cls); e.setAttribute("viewBox", view); e.setAttribute("preserveAspectRatio", "none"); e.setAttribute("aria-hidden", "true"); e.setAttribute("fill", "none");
+    const p = document.createElementNS(NS, "path"); p.setAttribute("d", d); p.setAttribute("stroke", "currentColor"); p.setAttribute("stroke-width", sw); p.setAttribute("stroke-linecap", "round"); p.setAttribute("vector-effect", "non-scaling-stroke"); p.setAttribute("pathLength", "1"); e.append(p); return e; };
+  function tickMark() {  // a hand-drawn box, and the pen's tick that lands in it
+    const e = document.createElementNS(NS, "svg"); e.setAttribute("viewBox", "0 0 26 26"); e.setAttribute("aria-hidden", "true"); e.setAttribute("fill", "none");
+    e.innerHTML = '<path d="M4 5.500 21.500 4.500 22 21.500 4.500 22z" stroke="currentColor" stroke-width="1.6"/><path class="tk" d="M7 13.500 11.500 19.500 25 2" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>';
+    return e;
+  }
   function row(g, ms) {
     const rises = g.price_changes.filter((p) => Number(p.to) > Number(p.from));
-    const chips = [];
-    if (g.since_died && g.since_died.count) chips.push(h("span", { class: "chip since" }, `${money.format(g.since_died.total)} since ${holder()} died`));
-    for (const p of rises) chips.push(h("span", { class: "chip rise" }, icon("arrow-up"), `${money.format(p.from)} → ${money.format(p.to)}`));
-    if (g.trial) chips.push(h("span", { class: "chip trial" }, "Began as a trial"));
-    if (g.kind && g.kind !== "subscription") chips.push(h("span", { class: "chip" }, g.kind));
+    const marks = [];
+    if (g.since_died && g.since_died.count) marks.push(h("span", { class: "mk since" }, `${money.format(g.since_died.total)} since ${holder()} died`));
+    for (const p of rises) marks.push(h("span", { class: "mk rise" }, `up ${money.format(p.from)} → ${money.format(p.to)}`));
+    if (g.trial) marks.push(h("span", { class: "mk trial" }, "began as a free trial"));
+    if (g.kind && g.kind !== "subscription") marks.push(h("span", { class: "mk" }, g.kind));
     const id = idOf(g), bank = g.charges[g.charges.length - 1].description;
-    const tick = h("button", { class: "tick", type: "button", "aria-pressed": "false", "aria-label": `Mark ${g.merchant} as stopped` }, h("i", null, icon("check")));
+    const tick = h("button", { class: "tick", type: "button", "aria-pressed": "false", "aria-label": `Mark ${g.merchant} as stopped` }, tickMark());
     const el = h("article", { class: "row" }, tick,
       h("details", null,
         h("summary", null,
-          h("span", { class: "name" }, g.merchant),
+          h("span", { class: "main" },
+            h("span", { class: "bank" }, bank),
+            h("span", { class: "name" }, g.merchant)),
           h("span", { class: "amount" }, money.format(g.amount), h("small", null, per[g.cadence])),
-          h("span", { class: "chev" }, icon("chevron-down")),
-          h("p", { class: "bank", title: bank }, bank),
-          chips.length ? h("span", { class: "chips" }, chips) : null),
+          h("span", { class: "chev", "aria-hidden": "true" }, "+"),
+          marks.length ? h("span", { class: "marks" }, marks) : null),
         h("div", { class: "more" },
           timeline(g, ms),
           h("dl", { class: "kv" },
             h("div", null, h("dt", null, "Next charge"), h("dd", null, "around " + fmtDay(g.next_due))),
             h("div", null, h("dt", null, "Every year"), h("dd", null, money.format(g.per_year))),
             h("div", null, h("dt", null, "In this statement"), h("dd", null, money.format(g.paid_in_period)))),
-          data.died ? h("div", { class: "btn-row" }, h("button", { class: "btn primary", type: "button", onclick: () => openLetter(g) }, icon("send"), "Write the letter")) : null,
-          h("details", { class: "charges" }, h("summary", null, `Show all ${g.count} charges`),
+          data.died ? h("div", { class: "btn-row" }, h("button", { class: "btn primary", type: "button", onclick: () => openLetter(g) }, "Write the letter")) : null,
+          h("details", { class: "charges" }, h("summary", null, `All ${g.count} charges`),
             h("table", null, h("tbody", null, g.charges.slice().reverse().map((c) =>
               h("tr", null, h("td", null, fmtDay(c.day)), h("td", null, c.description), h("td", null, money.format(c.amount))))))))));
     tick.addEventListener("click", () => {
@@ -386,15 +376,14 @@ footer { margin-top: 40px; text-align: center; color: var(--faint); font-size: 1
     const sum = list.reduce((a, g) => a + Number(g.per_year), 0);
     $("bar-text").replaceChildren(list.length
       ? h("span", null, h("b", null, `${list.length} of ${live.length}`), ` stopped · ${money.format(sum)} a year`)
-      : h("span", null, "Tick each one as you stop it"));
-    $("bar-prog").style.transform = `scaleX(${live.length ? list.length / live.length : 0})`;
+      : h("span", null, "Tick each line as you stop it"));
     $("copy").hidden = !live.length;
   }
   $("copy").addEventListener("click", async () => {
     const live = data.ghosts.filter((g) => g.active && !stopped.has(idOf(g)));
     const text = "Still to stop:\n" + live.map((g) => `- ${g.merchant}: ${money.format(g.amount)} ${per[g.cadence]} (on the statement: ${g.charges[g.charges.length - 1].description})`).join("\n");
     const label = $("copy").lastElementChild;
-    try { await navigator.clipboard.writeText(text); label.textContent = "Copied"; setTimeout(() => label.textContent = "Copy the list", 1500); } catch (e) { alert(text); }
+    try { await navigator.clipboard.writeText(text); label.textContent = "Copied"; setTimeout(() => label.textContent = "Copy list", 1500); } catch (e) { alert(text); }
   });
 
   const holder = () => $("holder").value.trim() || "they";
@@ -425,7 +414,7 @@ footer { margin-top: 40px; text-align: center; color: var(--faint); font-size: 1
     $("closing").hidden = !died;
     const ms = months(), live = data.ghosts.filter((g) => g.active), rest = data.ghosts.filter((g) => !g.active);
     $("t-k").textContent = died ? `Taken since ${holder()} died on ${fmtDay(data.died)}` : "Going out every year";
-    $("t-v").textContent = money.format(died ? data.since_died_total : data.per_year);
+    $("t-v").replaceChildren(money.format(died ? data.since_died_total : data.per_year), svg("under-pen", "0 0 300 14", "M2 6c90-5 200-5 296-1M30 12c80-4 170-4 240-2", "2.4"));
     const fact = (b, t) => h("li", null, h("b", null, b), " ", t);
     $("facts").replaceChildren(...[
       fact(live.length, "still charging"),
@@ -433,15 +422,15 @@ footer { margin-top: 40px; text-align: center; color: var(--faint); font-size: 1
       died ? fact(money.format(data.per_year), "a year") : null,
       data.price_rises ? fact(data.price_rises, data.price_rises === 1 ? "price rise" : "price rises") : null,
       data.duplicates.length ? fact(data.duplicates.length, "charged twice") : null].filter(Boolean));
-    $("haunting-note").textContent = `Biggest first · statement from ${fmtDay(data.start)} to ${fmtDay(data.end)}`;
-    $("haunting").replaceChildren(...(live.length ? live.map((g) => row(g, ms)) : [h("div", { class: "simple" }, h("div", { class: "item" }, "Nothing repeating is still running. This statement is clear."))]));
+    $("haunting-note").textContent = `${fmtDay(data.start)} to ${fmtDay(data.end)}`;
+    $("haunting").replaceChildren(...(live.length ? live.map((g) => row(g, ms)) : [h("div", { class: "simple" }, h("div", { class: "item" }, "Nothing repeating is still running."))]));
     $("dupes-wrap").hidden = !data.duplicates.length;
     $("dupes").replaceChildren(...data.duplicates.map((d) => h("div", { class: "item" },
-      h("div", { class: "grow" }, h("b", null, d.merchant), h("small", null, d.descriptions[1])), h("span", null, fmtDay(d.day)), h("b", { class: "num" }, money.format(d.amount)))));
+      h("div", { class: "grow" }, h("b", null, d.merchant), h("small", null, d.descriptions[1])), h("span", null, fmtDay(d.day)), h("b", null, money.format(d.amount)))));
     $("rested-wrap").hidden = !rest.length;
     $("rested").replaceChildren(...rest.map((g) => h("div", { class: "item" },
       h("div", { class: "grow" }, h("b", null, g.merchant), h("small", null, `${g.count} charges, ${money.format(g.amount)} ${per[g.cadence]}`)),
-      h("span", { class: "chip" }, "Last on " + fmtDay(g.last)))));
+      h("span", null, "last on " + fmtDay(g.last)))));
     const m = data.model, s = m.stats;
     const how = [
       `Read ${data.transactions} transactions from ${fmtDay(data.start)} to ${fmtDay(data.end)}. Dates and amounts are read by code, never by the model.`,

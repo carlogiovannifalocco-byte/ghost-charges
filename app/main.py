@@ -13,6 +13,7 @@ from decimal import Decimal
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from pydantic import BaseModel, Field
 from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 
 from . import letters, names, service, statement
 
@@ -21,6 +22,9 @@ DEMO = Path(__file__).parent.parent / "demo" / "statement.csv"
 MAX_BYTES = 5 * 1024 * 1024
 
 app = FastAPI(title="Ghost Charges", docs_url=None, redoc_url=None)
+
+
+app.mount("/fonts", StaticFiles(directory=STATIC / "fonts"), name="fonts")
 
 
 @app.get("/")
