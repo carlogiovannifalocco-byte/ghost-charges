@@ -121,7 +121,7 @@ dialog::backdrop { background: rgba(0,0,0,.6); }
 dialog form { display: flex; flex-direction: column; gap: 14px; padding: 22px; }
 dialog h2 { font-size: 28px; font-weight: 800; letter-spacing: -.02em; }
 dialog textarea.f { min-height: 280px; font: 400 14px/1.55 var(--mono); border: 1px solid var(--rule); resize: vertical; }
-dialog .note { color: var(--ink-2); font-size: 15px; margin: 0; }
+dialog .dnote { color: var(--ink-2); font-size: 15px; margin: 0; }
 footer { margin-top: 36px; font-size: 14px; color: var(--ink-2); }
 @media (max-width: 860px) {
   .start { grid-template-columns: 1fr; gap: 34px; padding-top: 8px; }
@@ -225,7 +225,7 @@ footer { margin-top: 36px; font-size: 14px; color: var(--ink-2); }
   </div>
   <div class="btn-row" style="margin:0"><button class="btn primary" id="l-write" type="button">Write it</button></div>
   <textarea class="f" id="l-text" aria-label="Letter" hidden></textarea>
-  <p class="note" id="l-note"></p>
+  <p class="dnote" id="l-note"></p>
   <div class="btn-row" style="margin:0;justify-content:flex-end"><button class="btn" id="l-copy" type="button" hidden><span>Copy</span></button><button class="btn" value="close">Close</button></div>
 </form></dialog>
 
