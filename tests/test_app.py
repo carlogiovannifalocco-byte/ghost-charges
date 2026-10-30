@@ -81,3 +81,11 @@ def test_web(monkeypatch):
     letter = c.post("/api/letter", json={"merchant": "Netflix", "holder": "W", "died": "2026-05-12", "language": "de",
                                           "charges": [{"day": "2026-06-03", "amount": "15.49"}]}).json()
     assert "Sehr geehrtes Netflix-Team," in letter["text"] and letter["total_since"] == "15.49"
+
+
+def test_currency_comes_from_the_file():
+    assert service.currency("Date,Amount,Currency\n2026-01-01,-5.00,GBP\n".encode()) == "GBP"
+    # A few dollar charges on a euro account do not make it a dollar account: the header decides.
+    header = "Date;Libellé;Débit euros;Crédit euros\n"
+    rows = "".join(f"0{i}/01/2026;OPENAI 20 USD;18,50;\n" for i in range(1, 9))
+    assert service.currency((header + rows).encode()) == "EUR"

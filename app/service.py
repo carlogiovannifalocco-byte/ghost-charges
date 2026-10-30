@@ -6,7 +6,22 @@ from collections import defaultdict
 from datetime import date
 from decimal import Decimal
 
+import re
+
 from . import ghosts, names, statement
+
+
+def currency(data: bytes) -> str:
+    """The statement's currency, from what it writes most: a currency column, a code or a symbol. What the
+    header and the lines above it say counts most ("Débit euros", "Betrag (EUR)"); a few charges in
+    dollars on a euro account must not turn it into a dollar account."""
+    lines = data[:200_000].decode("utf-8", "ignore").splitlines()
+    head, body = "\n".join(lines[:12]), "\n".join(lines[12:])
+    score = {}
+    for code, rx in (("EUR", r"\bEUR\b|€|\beuros?\b"), ("GBP", r"\bGBP\b|£"), ("USD", r"\bUSD\b|US\$|\$"), ("CHF", r"\bCHF\b")):
+        score[code] = 20 * len(re.findall(rx, head, re.I)) + len(re.findall(rx, body, re.I))
+    best = max(score, key=score.get)
+    return best if score[best] else "EUR"
 
 
 def analyse(data: bytes, use_model: bool = True, died: date | None = None) -> dict:
@@ -37,6 +52,7 @@ def analyse(data: bytes, use_model: bool = True, died: date | None = None) -> di
     result["model"] = {"used": used, "name": names.model_label() if stats else None,
                        "local": names.runs_locally() if stats else None, "stats": stats}
     result["transactions"] = read
+    result["currency"] = currency(data)
     # For the account of someone who has died: what each ghost has taken since that day.
     if died:
         total = Decimal("0")
