@@ -62,7 +62,19 @@ Be warned: the rules were fixed while looking at these four files, so this is th
 
 Most wrong names are the bank's own words: `PRLV`, `Recibo`, `Compra`, `Pago`. That is the gap the model is there to close.
 
-<!-- model results go here once they are measured -->
+With **gemma3:4b running locally on a laptop with no GPU** (`eval/heldout/gemma3-4b-cpu.json`, 1.5 to 8 minutes per statement):
+
+| Held-out set | rules only | with Gemma |
+|---|---|---|
+| subscriptions found | 25 / 30 | 25 / 30 |
+| named right | 14 / 25 | **19 / 25** |
+| false alarms | 8 | **5** |
+| still charging or stopped, right | 25 / 25 | 25 / 25 |
+| price rise right | 21 / 25 | 20 / 25 |
+| trial right | 24 / 25 | 23 / 25 |
+| double charges found | 3 / 4 | 3 / 4 |
+
+The model does what it is there for: it reads the names and spots payments to people. It does not find more subscriptions, because finding them is the code's job, and two price or trial checks came out one worse, because merging names moved a few charges between series. Of the 68 names it was asked for, it gave 61 that were kept, 2 were dropped because the bank's text did not back them, and 5 got no answer.
 
 ## Run it
 
@@ -81,6 +93,8 @@ Any OpenAI-compatible endpoint works:
 | `LLM_BASE_URL` | `http://localhost:11434/v1` (Ollama) |
 | `LLM_MODEL` | `gemma3:4b` |
 | `LLM_API_KEY` | `ollama` |
+| `LLM_TIMEOUT` | `600` seconds per call: a CPU needs minutes |
+| `LLM_BATCH` | `10` merchants per call |
 | `GHOST_NO_MODEL` | unset; `1` runs on rules only |
 
 The hosted demo (`render.yaml`) uses Gemma through Google AI Studio and says so on the page: there, the merchant descriptions (not the amounts or the account) leave the server. Run it locally to keep everything on your machine.

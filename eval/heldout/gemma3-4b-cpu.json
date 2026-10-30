@@ -1,0 +1,415 @@
+{
+  "label": "gemma3:4b",
+  "total": {
+    "subs": 30,
+    "found": 25,
+    "split": 1,
+    "named": 19,
+    "active": 25,
+    "rise": 20,
+    "trial": 23,
+    "false": 5,
+    "dup": 4,
+    "dup_found": 3,
+    "dup_reported": 4
+  },
+  "files": [
+    {
+      "file": "fr-credit-agricole-style.csv",
+      "rows": [
+        {
+          "merchant": "Canal+",
+          "found": true,
+          "split": true,
+          "as": "Free Mobile",
+          "named": false,
+          "active": true,
+          "rise": false,
+          "trial": true
+        },
+        {
+          "merchant": "Free Mobile",
+          "found": true,
+          "split": false,
+          "as": "Free Mobile",
+          "named": true,
+          "active": true,
+          "rise": true,
+          "trial": true
+        },
+        {
+          "merchant": "Deezer",
+          "found": true,
+          "split": false,
+          "as": "Deezer",
+          "named": true,
+          "active": true,
+          "rise": true,
+          "trial": true
+        },
+        {
+          "merchant": "Apple iCloud+",
+          "found": true,
+          "split": false,
+          "as": "Apple Bill",
+          "named": true,
+          "active": true,
+          "rise": true,
+          "trial": true
+        },
+        {
+          "merchant": "Apple Music",
+          "found": true,
+          "split": false,
+          "as": "Apple Bill",
+          "named": true,
+          "active": true,
+          "rise": true,
+          "trial": true
+        },
+        {
+          "merchant": "Amazon Prime",
+          "found": true,
+          "split": false,
+          "as": "Amazon Prime",
+          "named": true,
+          "active": true,
+          "rise": true,
+          "trial": true
+        },
+        {
+          "merchant": "Basic-Fit",
+          "found": true,
+          "split": false,
+          "as": "Free Mobile",
+          "named": false,
+          "active": true,
+          "rise": true,
+          "trial": true
+        },
+        {
+          "merchant": "ChatGPT Plus (OpenAI, billed in USD)",
+          "found": true,
+          "split": false,
+          "as": "ChatGPT",
+          "named": true,
+          "active": true,
+          "rise": true,
+          "trial": true
+        }
+      ],
+      "false_alarms": [
+        "Pharmacie du Parc (quarterly, 21.30)"
+      ],
+      "duplicates": 1,
+      "duplicates_found": 1,
+      "duplicates_reported": 1,
+      "model": {
+        "used": true,
+        "name": "gemma3:4b",
+        "local": true,
+        "stats": {
+          "asked": 19,
+          "named": 18,
+          "dropped_unsupported": 0,
+          "no_answer": 1,
+          "errors": 0
+        }
+      },
+      "seconds": 298.8
+    },
+    {
+      "file": "es-santander-style.csv",
+      "rows": [
+        {
+          "merchant": "Movistar (Telefonica)",
+          "found": true,
+          "split": false,
+          "as": "Iberdrola Clientes",
+          "named": false,
+          "active": true,
+          "rise": false,
+          "trial": true
+        },
+        {
+          "merchant": "Filmin",
+          "found": true,
+          "split": false,
+          "as": "Playstation Network",
+          "named": false,
+          "active": true,
+          "rise": true,
+          "trial": false
+        },
+        {
+          "merchant": "Google One",
+          "found": true,
+          "split": false,
+          "as": "Playstation Network",
+          "named": false,
+          "active": true,
+          "rise": true,
+          "trial": true
+        },
+        {
+          "merchant": "Duolingo Super (via Google Play)",
+          "found": true,
+          "split": false,
+          "as": "Playstation Network",
+          "named": false,
+          "active": true,
+          "rise": true,
+          "trial": true
+        },
+        {
+          "merchant": "PlayStation Plus",
+          "found": true,
+          "split": false,
+          "as": "Playstation Network",
+          "named": true,
+          "active": true,
+          "rise": true,
+          "trial": true
+        },
+        {
+          "merchant": "Glovo Prime",
+          "found": true,
+          "split": false,
+          "as": "Glovo",
+          "named": true,
+          "active": true,
+          "rise": true,
+          "trial": true
+        },
+        {
+          "merchant": "HBO Max",
+          "found": false,
+          "split": false,
+          "as": null,
+          "named": false,
+          "active": false,
+          "rise": false,
+          "trial": false
+        },
+        {
+          "merchant": "El Pais (digital subscription)",
+          "found": false,
+          "split": false,
+          "as": null,
+          "named": false,
+          "active": false,
+          "rise": false,
+          "trial": false
+        }
+      ],
+      "false_alarms": [
+        "Glovo (quarterly, 9.00)"
+      ],
+      "duplicates": 1,
+      "duplicates_found": 0,
+      "duplicates_reported": 1,
+      "model": {
+        "used": true,
+        "name": "gemma3:4b",
+        "local": true,
+        "stats": {
+          "asked": 6,
+          "named": 6,
+          "dropped_unsupported": 0,
+          "no_answer": 0,
+          "errors": 0
+        }
+      },
+      "seconds": 90.1
+    },
+    {
+      "file": "ie-revolut-style.csv",
+      "rows": [
+        {
+          "merchant": "HelloFresh",
+          "found": true,
+          "split": false,
+          "as": "Hellofresh",
+          "named": true,
+          "active": true,
+          "rise": false,
+          "trial": false
+        },
+        {
+          "merchant": "Uber One",
+          "found": true,
+          "split": false,
+          "as": "Uber One",
+          "named": true,
+          "active": true,
+          "rise": true,
+          "trial": true
+        },
+        {
+          "merchant": "Midjourney (billed in USD)",
+          "found": true,
+          "split": false,
+          "as": "Midjourney",
+          "named": true,
+          "active": true,
+          "rise": false,
+          "trial": true
+        },
+        {
+          "merchant": "Xbox Game Pass",
+          "found": false,
+          "split": false,
+          "as": null,
+          "named": false,
+          "active": false,
+          "rise": false,
+          "trial": false
+        },
+        {
+          "merchant": "Microsoft 365 Personal",
+          "found": false,
+          "split": false,
+          "as": null,
+          "named": false,
+          "active": false,
+          "rise": false,
+          "trial": false
+        },
+        {
+          "merchant": "Revolut Premium plan",
+          "found": true,
+          "split": false,
+          "as": "Premium plan",
+          "named": true,
+          "active": true,
+          "rise": true,
+          "trial": true
+        },
+        {
+          "merchant": "Strava",
+          "found": true,
+          "split": false,
+          "as": "Strava",
+          "named": true,
+          "active": true,
+          "rise": true,
+          "trial": true
+        }
+      ],
+      "false_alarms": [
+        "To Aoife (monthly, 1400.00)",
+        "Boots (quarterly, 16.49)"
+      ],
+      "duplicates": 1,
+      "duplicates_found": 1,
+      "duplicates_reported": 1,
+      "model": {
+        "used": true,
+        "name": "gemma3:4b",
+        "local": true,
+        "stats": {
+          "asked": 23,
+          "named": 18,
+          "dropped_unsupported": 1,
+          "no_answer": 4,
+          "errors": 0
+        }
+      },
+      "seconds": 193.2
+    },
+    {
+      "file": "nl-ing-style.csv",
+      "rows": [
+        {
+          "merchant": "Ziggo",
+          "found": true,
+          "split": false,
+          "as": "ZIGGO SERVICES B.V.",
+          "named": true,
+          "active": true,
+          "rise": false,
+          "trial": true
+        },
+        {
+          "merchant": "Odido mobile",
+          "found": true,
+          "split": false,
+          "as": "Odido Netherlands B.V.",
+          "named": true,
+          "active": true,
+          "rise": true,
+          "trial": true
+        },
+        {
+          "merchant": "Videoland",
+          "found": true,
+          "split": false,
+          "as": "Videoland",
+          "named": true,
+          "active": true,
+          "rise": true,
+          "trial": true
+        },
+        {
+          "merchant": "Disney+ (via PayPal)",
+          "found": false,
+          "split": false,
+          "as": null,
+          "named": false,
+          "active": false,
+          "rise": false,
+          "trial": false
+        },
+        {
+          "merchant": "Nintendo Switch Online",
+          "found": true,
+          "split": false,
+          "as": "Nintendo eShop",
+          "named": true,
+          "active": true,
+          "rise": true,
+          "trial": true
+        },
+        {
+          "merchant": "Storytel",
+          "found": true,
+          "split": false,
+          "as": "Storytel B.V.",
+          "named": true,
+          "active": true,
+          "rise": true,
+          "trial": true
+        },
+        {
+          "merchant": "Patreon (billed in USD)",
+          "found": true,
+          "split": false,
+          "as": "Patreon",
+          "named": true,
+          "active": true,
+          "rise": true,
+          "trial": true
+        }
+      ],
+      "false_alarms": [
+        "Apotheek Overtoom (quarterly, 15.05)"
+      ],
+      "duplicates": 1,
+      "duplicates_found": 1,
+      "duplicates_reported": 1,
+      "model": {
+        "used": true,
+        "name": "gemma3:4b",
+        "local": true,
+        "stats": {
+          "asked": 20,
+          "named": 19,
+          "dropped_unsupported": 1,
+          "no_answer": 0,
+          "errors": 0
+        }
+      },
+      "seconds": 463.9
+    }
+  ]
+}
