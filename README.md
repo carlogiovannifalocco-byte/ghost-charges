@@ -70,11 +70,11 @@ With **gemma3:4b running locally on a laptop with no GPU** (`eval/heldout/gemma3
 | named right | 14 / 25 | **19 / 25** |
 | false alarms | 8 | **5** |
 | still charging or stopped, right | 25 / 25 | 25 / 25 |
-| price rise right | not re-measured here | 20 / 25 |
-| trial right | not re-measured here | 23 / 25 |
+| price rise right | 21 / 25 | 20 / 25 |
+| trial right | 24 / 25 | 23 / 25 |
 | double charges found | 3 / 4 | 3 / 4 |
 
-The model does what it is there for: it reads the names and spots payments to people. It does not find more subscriptions, because finding them is the code's job. Of the 68 names it was asked for, it gave 61 that were kept, 2 were dropped because the bank's text did not back them, and 5 got no answer.
+The model does what it is there for: it reads the names and spots payments to people. It does not find more subscriptions, because finding them is the code's job, and two price or trial checks came out one worse, because merging names moved a few charges between series. Of the 68 names it was asked for, it gave 61 that were kept, 2 were dropped because the bank's text did not back them, and 5 got no answer.
 
 ## Run it
 
