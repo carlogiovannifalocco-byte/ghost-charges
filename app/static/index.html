@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ghost Charges</title>
+<meta name="description" content="Find the subscriptions haunting your bank statement, with an open-weight model on your own machine.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3C9.9 3 6 7.6 6 13.5V28l3.3-2.5L12.7 28l3.3-2.5 3.3 2.5 3.4-2.5L26 28V13.5C26 7.6 22.1 3 16 3z' fill='%23b8f2c8'/%3E%3Ccircle cx='12.5' cy='14' r='2' fill='%23111'/%3E%3Ccircle cx='19.5' cy='14' r='2' fill='%23111'/%3E%3C/svg%3E">
+<style>
+:root {
+  --bg: #0d0f14; --bg2: #141821; --card: #181d28; --line: #262d3c; --text: #e9ecf3; --muted: #9aa3b5;
+  --ecto: #9df2b4; --ecto-soft: rgba(157,242,180,.12); --amber: #f5c26b; --amber-soft: rgba(245,194,107,.12);
+  --red: #ff8a80; --red-soft: rgba(255,138,128,.12); --violet: #b9a4ff; --shadow: 0 10px 30px rgba(0,0,0,.35);
+  --radius: 16px; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--text);
+  font: 16px/1.5 Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+body { background: radial-gradient(1200px 500px at 50% -200px, rgba(157,242,180,.10), transparent 70%), var(--bg); min-height: 100vh; }
+a { color: var(--ecto); }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px 80px; }
+header { display: flex; align-items: center; gap: 12px; padding: 22px 0 8px; }
+.logo { width: 36px; height: 36px; animation: float 4s ease-in-out infinite; }
+@keyframes float { 50% { transform: translateY(-4px); } }
+@media (prefers-reduced-motion: reduce) { .logo, .ghost-ic { animation: none !important; } }
+header h1 { font-size: 20px; margin: 0; letter-spacing: -.01em; }
+header .pill { margin-left: auto; }
+.pill { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); border: 1px solid var(--line);
+  padding: 5px 10px; border-radius: 999px; background: var(--bg2); white-space: nowrap; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+.dot.ok { background: var(--ecto); box-shadow: 0 0 10px var(--ecto); } .dot.warn { background: var(--amber); }
+.hero { text-align: center; padding: 48px 0 28px; }
+.hero h2 { font-size: clamp(30px, 6vw, 52px); line-height: 1.08; margin: 0 0 14px; letter-spacing: -.02em; }
+.hero h2 em { font-style: normal; color: var(--ecto); text-shadow: 0 0 24px rgba(157,242,180,.35); }
+.hero p { color: var(--muted); max-width: 620px; margin: 0 auto; font-size: 17px; }
+.drop { margin: 28px auto 0; max-width: 640px; border: 1.5px dashed #3a4459; border-radius: var(--radius); background: var(--bg2);
+  padding: 28px 20px; text-align: center; transition: border-color .2s, background .2s; cursor: pointer; }
+.drop:hover, .drop.over { border-color: var(--ecto); background: #161c26; }
+.drop b { display: block; font-size: 17px; margin-bottom: 4px; }
+.drop small { color: var(--muted); }
+.drop input { display: none; }
+.actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 14px; }
+.btn { appearance: none; border: 1px solid var(--line); background: var(--card); color: var(--text); font: inherit; font-size: 15px;
+  padding: 10px 16px; border-radius: 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }
+.btn:hover { border-color: #3b465c; } .btn:focus-visible { outline: 2px solid var(--ecto); outline-offset: 2px; }
+.btn.primary { background: var(--ecto); color: #0b1a10; border-color: transparent; font-weight: 600; }
+.btn.small { white-space: nowrap; font-size: 13px; padding: 6px 10px; min-height: 34px; border-radius: 10px; }
+.btn[aria-pressed="true"].bury { background: var(--red-soft); border-color: var(--red); color: var(--red); }
+.btn[aria-pressed="true"].keep { background: var(--ecto-soft); border-color: var(--ecto); color: var(--ecto); }
+.privacy { display: flex; gap: 10px; align-items: flex-start; max-width: 640px; margin: 14px auto 0; color: var(--muted); font-size: 14px; text-align: left; }
+.privacy svg { flex: none; margin-top: 2px; }
+.err { color: var(--red); text-align: center; margin-top: 12px; min-height: 1.5em; }
+.loading { text-align: center; color: var(--muted); padding: 40px 0; }
+.loading .ghost-ic { width: 54px; height: 54px; animation: float 1.6s ease-in-out infinite; display: block; margin: 0 auto 10px; }
+.summary { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 12px; margin: 10px 0 26px; }
+.stat { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; }
+.stat .k { color: var(--muted); font-size: 13px; } .stat .v { font-size: 26px; font-weight: 700; letter-spacing: -.01em; }
+.stat.big { background: linear-gradient(135deg, rgba(157,242,180,.16), rgba(185,164,255,.10)); border-color: rgba(157,242,180,.35); }
+.stat.big .v { font-size: 34px; color: var(--ecto); }
+.section-title { display: flex; align-items: baseline; gap: 10px; margin: 30px 0 12px; }
+.section-title h3 { margin: 0; font-size: 18px; } .section-title span { color: var(--muted); font-size: 14px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+.ghost { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; display: flex; flex-direction: column; gap: 10px;
+  box-shadow: var(--shadow); transition: opacity .2s, transform .2s; }
+.ghost.buried { opacity: .55; } .ghost.buried .name { text-decoration: line-through; text-decoration-color: var(--red); }
+.ghost .top { display: flex; gap: 12px; align-items: flex-start; }
+.ghost .ghost-ic { width: 34px; height: 34px; flex: none; }
+.ghost .name { font-weight: 650; font-size: 17px; line-height: 1.25; word-break: break-word; }
+.ghost .sub { color: var(--muted); font-size: 14px; }
+.ghost .price { margin-left: auto; text-align: right; white-space: nowrap; }
+.ghost .price b { display: block; font-size: 18px; } .ghost .price small { color: var(--muted); font-size: 13px; }
+.tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag { font-size: 12px; padding: 3px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+.tag.rise { color: var(--amber); border-color: rgba(245,194,107,.4); background: var(--amber-soft); }
+.tag.trial { color: var(--violet); border-color: rgba(185,164,255,.4); background: rgba(185,164,255,.10); }
+.tag.live { color: var(--ecto); border-color: rgba(157,242,180,.4); background: var(--ecto-soft); }
+.tag.rest { color: var(--muted); }
+.timeline { display: flex; gap: 3px; align-items: flex-end; height: 34px; }
+.timeline i { flex: 1; border-radius: 3px 3px 1px 1px; background: #2a3242; min-height: 3px; }
+.timeline i.on { background: var(--ecto); opacity: .85; } .timeline i.up { background: var(--amber); }
+.timeline-labels { display: flex; justify-content: space-between; color: var(--muted); font-size: 11px; margin-top: -6px; }
+.row-actions { display: flex; gap: 8px; align-items: center; }
+.row-actions .btn:last-child { margin-left: auto; }
+details.charges summary { cursor: pointer; color: var(--muted); font-size: 13px; list-style: none; }
+details.charges summary::-webkit-details-marker { display: none; }
+details.charges table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+details.charges td { padding: 5px 4px; border-top: 1px solid var(--line); vertical-align: top; }
+details.charges td:nth-child(2) { color: var(--muted); word-break: break-word; }
+details.charges td:last-child { text-align: right; white-space: nowrap; }
+.epitaph { font-style: italic; color: #c7cede; font-size: 14px; border-left: 2px solid var(--violet); padding-left: 10px; }
+.list { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.list .item { display: flex; gap: 12px; padding: 12px 16px; border-top: 1px solid var(--line); align-items: center; flex-wrap: wrap; }
+.list .item:first-child { border-top: 0; }
+.list .item .grow { flex: 1; min-width: 180px; } .list .item small { color: var(--muted); display: block; }
+.bar { position: sticky; bottom: 0; margin-top: 24px; background: rgba(13,15,20,.92); backdrop-filter: blur(10px); border-top: 1px solid var(--line);
+  padding: 12px 20px; display: flex; gap: 12px; align-items: center; justify-content: center; flex-wrap: wrap; }
+.bar b { color: var(--ecto); }
+.how { color: var(--muted); font-size: 14px; background: var(--bg2); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 18px; margin-top: 26px; }
+.how summary { cursor: pointer; color: var(--text); font-weight: 600; }
+.how li { margin: 6px 0; }
+.mourn { max-width: 640px; margin: 16px auto 0; text-align: left; background: var(--bg2); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 16px; }
+.mourn > label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
+.mourn input[type=checkbox] { width: 18px; height: 18px; margin-top: 3px; accent-color: var(--violet); flex: none; }
+.mourn small { color: var(--muted); display: block; }
+.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+.fields label { font-size: 13px; color: var(--muted); display: flex; flex-direction: column; gap: 4px; }
+input.f, select.f, textarea.f { font: inherit; font-size: 15px; color: var(--text); background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 9px 10px; min-height: 42px; width: 100%; }
+input.f:focus, select.f:focus, textarea.f:focus { outline: 2px solid var(--violet); outline-offset: 1px; }
+.stat.mourning { background: linear-gradient(135deg, rgba(185,164,255,.18), rgba(157,242,180,.08)); border-color: rgba(185,164,255,.45); }
+.stat.mourning .v { color: var(--violet); }
+.tag.since { color: var(--violet); border-color: rgba(185,164,255,.45); background: rgba(185,164,255,.10); }
+dialog { background: var(--bg2); color: var(--text); border: 1px solid var(--line); border-radius: var(--radius); padding: 0; width: min(640px, calc(100vw - 24px)); box-shadow: var(--shadow); }
+dialog::backdrop { background: rgba(0,0,0,.6); }
+dialog form { padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+dialog h3 { margin: 0; font-size: 18px; }
+dialog textarea.f { min-height: 300px; font-size: 14px; line-height: 1.5; resize: vertical; }
+dialog .note { color: var(--muted); font-size: 13px; margin: 0; }
+footer { color: var(--muted); font-size: 13px; text-align: center; margin-top: 40px; }
+[hidden] { display: none !important; }
+@media (max-width: 760px) {
+  .summary { grid-template-columns: repeat(3, 1fr); gap: 8px; } .stat.big { grid-column: 1 / -1; }
+  .stat { padding: 12px; } .stat .v { font-size: 19px; } .stat .k { font-size: 12px; }
+  .section-title { flex-wrap: wrap; gap: 2px 10px; } .section-title h3 { white-space: nowrap; }
+  .hero { padding: 30px 0 18px; } header .pill .long { display: none; }
+  .grid { grid-template-columns: 1fr; } .fields { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="ghost" viewBox="0 0 32 32"><path d="M16 3C9.9 3 6 7.6 6 13.5V28l3.3-2.5L12.7 28l3.3-2.5 3.3 2.5 3.4-2.5L26 28V13.5C26 7.6 22.1 3 16 3z" fill="currentColor"/><circle cx="12.5" cy="14" r="2" fill="#0d0f14"/><circle cx="19.5" cy="14" r="2" fill="#0d0f14"/><ellipse cx="16" cy="19.5" rx="2" ry="1.4" fill="#0d0f14"/></symbol>
+  <symbol id="lock" viewBox="0 0 24 24"><path d="M7 10V7a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="2"/><rect x="4.5" y="10" width="15" height="11" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+<div class="wrap">
+  <header>
+    <svg class="logo" style="color:var(--ecto)"><use href="#ghost"/></svg>
+    <h1>Ghost Charges</h1>
+    <span class="pill" id="model-pill"><span class="dot" id="model-dot"></span><span id="model-text">Checking the model…</span></span>
+  </header>
+
+  <section class="hero" id="start">
+    <h2>Find the subscriptions<br><em>haunting</em> your bank account.</h2>
+    <p>Forgotten plans, free trials that started charging, prices that crept up, the same bill twice. Drop a statement export and see every charge that keeps coming back.</p>
+    <label class="drop" id="drop" tabindex="0">
+      <input type="file" id="file" accept=".csv,text/csv,text/plain">
+      <b>Drop your bank statement here</b>
+      <small>A CSV export from your bank's website or app, ideally the last 12 months</small>
+    </label>
+    <div class="mourn">
+      <label><input type="checkbox" id="mourn"><span>This is the account of someone who has died<small>Their subscriptions keep charging after they are gone. Ghost Charges shows what was taken since that day and drafts the letter asking each company to close the account and refund.</small></span></label>
+      <div class="fields" id="mourn-fields" hidden>
+        <label>Their name<input class="f" id="holder" autocomplete="off" maxlength="80"></label>
+        <label>Date they died<input class="f" id="died" type="date"></label>
+      </div>
+    </div>
+    <div class="actions"><button class="btn" id="try-demo" type="button" hidden>Try an invented statement</button></div>
+    <p class="privacy" id="privacy"><svg width="18" height="18"><use href="#lock"/></svg><span id="privacy-text"></span></p>
+    <p class="err" id="err" role="alert"></p>
+  </section>
+
+  <div class="loading" id="loading" hidden><svg class="ghost-ic" style="color:var(--ecto)"><use href="#ghost"/></svg><span id="loading-text">Reading the statement…</span></div>
+
+  <main id="results" hidden>
+    <div class="summary" id="summary"></div>
+    <div class="section-title"><h3>Still haunting you</h3><span id="haunting-note"></span></div>
+    <div class="grid" id="haunting"></div>
+    <div id="dupes-wrap" hidden>
+      <div class="section-title"><h3>Charged twice</h3><span>Same merchant, same amount, within two days</span></div>
+      <div class="list" id="dupes"></div>
+    </div>
+    <div id="rested-wrap" hidden>
+      <div class="section-title"><h3>Laid to rest</h3><span>They repeated, then stopped</span></div>
+      <div class="list" id="rested"></div>
+    </div>
+    <details class="how" id="how"><summary>How Ghost Charges decided</summary><ul id="how-list"></ul></details>
+    <div class="actions" style="margin-top:22px"><button class="btn" id="again" type="button">Check another statement</button></div>
+  </main>
+  <footer>Open source. Your statement is read in memory and never saved.</footer>
+</div>
+<dialog id="letter-dlg"><form method="dialog" id="letter-form">
+  <h3 id="letter-title">Letter</h3>
+  <div class="fields">
+    <label>Language<select class="f" id="l-lang"><option value="en">English</option><option value="it">Italiano</option><option value="de">Deutsch</option><option value="es">Español</option><option value="fr">Français</option></select></label>
+    <label>Your relation<input class="f" id="l-rel" placeholder="daughter, husband, executor" maxlength="40"></label>
+    <label style="grid-column:1/-1">Your name, to sign it<input class="f" id="l-sender" maxlength="80" autocomplete="name"></label>
+  </div>
+  <div class="actions" style="justify-content:flex-start;margin:0"><button class="btn primary small" id="l-write" type="button">Write it</button></div>
+  <textarea class="f" id="l-text" aria-label="Letter" hidden></textarea>
+  <p class="note" id="l-note"></p>
+  <div class="actions" style="justify-content:flex-end;margin:0"><button class="btn small" id="l-copy" type="button" hidden>Copy</button><button class="btn small" value="close">Close</button></div>
+</form></dialog>
+<div class="bar" id="bar" hidden><span id="bar-text"></span><button class="btn small" id="copy" type="button">Copy the cancel list</button></div>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  let money = new Intl.NumberFormat(undefined, { style: "currency", currency: "EUR" });
+  const fmtDay = (iso) => new Date(iso + "T12:00:00").toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" });
+  const fmtMonth = (d) => d.toLocaleDateString(undefined, { month: "short" });
+  const per = { weekly: "a week", monthly: "a month", quarterly: "every 3 months", yearly: "a year" };
+  let data = null, buried = new Set();
+
+  function h(tag, attrs, ...kids) {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs || {})) {
+      if (v == null || v === false) continue;
+      if (k === "class") n.className = v; else if (k.startsWith("on")) n.addEventListener(k.slice(2), v); else n.setAttribute(k, v === true ? "" : v);
+    }
+    for (const kid of kids.flat()) if (kid != null && kid !== false) n.append(kid.nodeType ? kid : String(kid));
+    return n;
+  }
+  const ghostIcon = (color) => { const s = document.createElementNS("http://www.w3.org/2000/svg", "svg"); s.setAttribute("class", "ghost-ic");
+    s.style.color = color; const u = document.createElementNS("http://www.w3.org/2000/svg", "use"); u.setAttribute("href", "#ghost"); s.append(u); return s; };
+
+  fetch("/api/config").then((r) => r.json()).then((c) => {
+    $("try-demo").hidden = !c.demo;
+    if (!c.model) { $("model-text").textContent = "Rules only"; $("privacy-text").textContent = "Your statement is read in memory on this server and never saved. No model is used: merchant names come from the bank's own text."; return; }
+    $("model-dot").className = "dot " + (c.local ? "ok" : "warn");
+    $("model-text").innerHTML = "";
+    $("model-text").append(c.model, h("span", { class: "long" }, c.local ? " · on this machine" : " · hosted"));
+    $("privacy-text").textContent = c.local
+      ? "Your statement is read in memory and never saved. " + c.model + " runs on this machine, so nothing leaves it."
+      : "Demo server: the statement is read in memory and never saved, but the merchant descriptions are sent to a hosted " + c.model + ". Run it on your own computer with Ollama to keep everything local.";
+  }).catch(() => { $("model-text").textContent = "Offline"; });
+
+  async function run(promise) {
+    $("err").textContent = ""; $("loading").hidden = false; $("results").hidden = true; $("bar").hidden = true;
+    const slow = setTimeout(() => { $("loading-text").textContent = "Gemma is reading the merchant names… a small model on a laptop can take a minute."; }, 3500);
+    try {
+      const r = await promise; const body = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(body.detail || "Something went wrong.");
+      data = body; buried = new Set(); render();
+      $("start").hidden = true; $("results").hidden = false; window.scrollTo({ top: 0 });
+    } catch (e) { $("err").textContent = e.message; }
+    finally { clearTimeout(slow); $("loading").hidden = true; $("loading-text").textContent = "Reading the statement…"; }
+  }
+  const DEMO_HOLDER = "Walter Brenner", DEMO_DIED = "2026-05-12";  // the invented account in demo/statement.csv
+  function query() {
+    if (!$("mourn").checked) return "";
+    if (!$("died").value) throw new Error("Add the date they died, or untick the box.");
+    return "?died=" + encodeURIComponent($("died").value);
+  }
+  function upload(file) {
+    if (!file) return; const fd = new FormData(); fd.append("file", file);
+    try { run(fetch("/api/analyse" + query(), { method: "POST", body: fd })); } catch (e) { $("err").textContent = e.message; }
+  }
+  $("mourn").addEventListener("change", () => { $("mourn-fields").hidden = !$("mourn").checked; if ($("mourn").checked) $("holder").focus(); });
+  $("file").addEventListener("change", (e) => upload(e.target.files[0]));
+  const drop = $("drop");
+  drop.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); $("file").click(); } });
+  ["dragenter", "dragover"].forEach((t) => drop.addEventListener(t, (e) => { e.preventDefault(); drop.classList.add("over"); }));
+  ["dragleave", "drop"].forEach((t) => drop.addEventListener(t, (e) => { e.preventDefault(); drop.classList.remove("over"); }));
+  drop.addEventListener("drop", (e) => upload(e.dataTransfer.files[0]));
+  $("try-demo").addEventListener("click", () => {
+    // The demo statement is the invented account of someone who died: show it the way a family would.
+    $("mourn").checked = true; $("mourn-fields").hidden = false; $("holder").value = DEMO_HOLDER; $("died").value = DEMO_DIED;
+    run(fetch("/api/demo" + query(), { method: "POST" }));
+  });
+  $("again").addEventListener("click", () => { $("results").hidden = true; $("bar").hidden = true; $("start").hidden = false; $("file").value = ""; });
+
+  function months() {
+    const s = new Date(data.start + "T12:00:00"), e = new Date(data.end + "T12:00:00"), out = [];
+    for (let d = new Date(s.getFullYear(), s.getMonth(), 1); d <= e; d.setMonth(d.getMonth() + 1)) out.push(new Date(d));
+    return out;
+  }
+  function timeline(g, ms) {
+    const byMonth = new Map();
+    for (const c of g.charges) { const k = c.day.slice(0, 7); byMonth.set(k, (byMonth.get(k) || 0) + Number(c.amount)); }
+    const max = Math.max(...byMonth.values());
+    const rises = new Set(g.price_changes.filter((p) => Number(p.to) > Number(p.from)).map((p) => p.day.slice(0, 7)));
+    return h("div", null,
+      h("div", { class: "timeline", "aria-hidden": "true" }, ms.map((m) => {
+        const k = m.toISOString().slice(0, 7), v = byMonth.get(k) || 0;
+        return h("i", { class: v ? (rises.has(k) ? "on up" : "on") : null, style: `height:${v ? 30 + 70 * v / max : 8}%`, title: v ? fmtMonth(m) + ": " + money.format(v) : "" });
+      })),
+      h("div", { class: "timeline-labels" }, h("span", null, fmtMonth(ms[0])), h("span", null, fmtMonth(ms[ms.length - 1]))));
+  }
+  function ghostCard(g, ms) {
+    const rises = g.price_changes.filter((p) => Number(p.to) > Number(p.from));
+    const tags = [h("span", { class: "tag live" }, "Next around " + fmtDay(g.next_due))];
+    if (g.kind && g.kind !== "subscription") tags.push(h("span", { class: "tag" }, g.kind));
+    for (const p of rises) tags.push(h("span", { class: "tag rise" }, `${money.format(p.from)} → ${money.format(p.to)} in ${fmtMonth(new Date(p.day + "T12:00:00"))}`));
+    if (g.since_died && g.since_died.count) tags.push(h("span", { class: "tag since" }, `${money.format(g.since_died.total)} taken since ${holder()} died`));
+    if (g.trial) tags.push(h("span", { class: "tag trial" }, `Trial for ${money.format(g.trial.amount)} on ${fmtDay(g.trial.day)}, then paid`));
+    const id = g.key + g.cadence + g.amount;
+    const bury = h("button", { class: "btn small bury", type: "button", "aria-pressed": String(buried.has(id)) }, "Cancel it");
+    const card = h("article", { class: "ghost" + (buried.has(id) ? " buried" : "") },
+      h("div", { class: "top" }, ghostIcon(rises.length ? "var(--amber)" : "var(--ecto)"),
+        h("div", null, h("div", { class: "name" }, g.merchant), h("div", { class: "sub" }, `${g.count} charges since ${fmtDay(g.first)}`)),
+        h("div", { class: "price" }, h("b", null, money.format(g.amount)), h("small", null, per[g.cadence]))),
+      timeline(g, ms),
+      h("div", { class: "tags" }, tags),
+      h("div", { class: "row-actions" },
+        h("span", { class: "sub" }, h("b", { style: "color:var(--text)" }, money.format(g.per_year)), " a year · ", money.format(g.paid_in_period), " paid in this statement"),
+        bury),
+      data.died ? h("button", { class: "btn small", type: "button", onclick: () => openLetter(g) }, "Write the letter to " + g.merchant) : null,
+      h("details", { class: "charges" }, h("summary", null, "Show the " + g.count + " charges"),
+        h("table", null, h("tbody", null, g.charges.slice().reverse().map((c) =>
+          h("tr", null, h("td", null, fmtDay(c.day)), h("td", null, c.description), h("td", null, money.format(c.amount))))))));
+    bury.addEventListener("click", () => {
+      buried.has(id) ? buried.delete(id) : buried.add(id);
+      bury.setAttribute("aria-pressed", String(buried.has(id))); card.classList.toggle("buried", buried.has(id)); updateBar();
+    });
+    return card;
+  }
+  function updateBar() {
+    const list = data.ghosts.filter((g) => g.active && buried.has(g.key + g.cadence + g.amount));
+    $("bar").hidden = !list.length;
+    const sum = list.reduce((a, g) => a + Number(g.per_year), 0);
+    $("bar-text").innerHTML = ""; $("bar-text").append("Cancelling ", h("b", null, list.length), list.length === 1 ? " ghost saves " : " ghosts saves ", h("b", null, money.format(sum)), " a year");
+  }
+  $("copy").addEventListener("click", async () => {
+    const list = data.ghosts.filter((g) => g.active && buried.has(g.key + g.cadence + g.amount));
+    const text = "To cancel:\n" + list.map((g) => `- ${g.merchant}: ${money.format(g.amount)} ${per[g.cadence]} (${money.format(g.per_year)} a year)`).join("\n");
+    try { await navigator.clipboard.writeText(text); $("copy").textContent = "Copied"; setTimeout(() => $("copy").textContent = "Copy the cancel list", 1500); } catch (e) { alert(text); }
+  });
+
+  const holder = () => $("holder").value.trim() || "they";
+  let letterFor = null;
+  function openLetter(g) {
+    letterFor = g; $("letter-title").textContent = "Letter to " + g.merchant;
+    $("l-text").hidden = true; $("l-copy").hidden = true; $("l-note").textContent = "";
+    $("letter-dlg").showModal();
+  }
+  $("l-write").addEventListener("click", async () => {
+    const g = letterFor; $("l-note").textContent = "Writing…"; $("l-write").disabled = true;
+    try {
+      const r = await fetch("/api/letter", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({
+        merchant: g.merchant, holder: $("holder").value.trim() || "the account holder", died: data.died, sender: $("l-sender").value.trim(),
+        relation: $("l-rel").value.trim(), language: $("l-lang").value, charges: g.charges.concat(data.duplicates.filter((d) => d.merchant === g.merchant))  // a double charge is refunded too
+          .map((c) => ({ day: c.day, amount: c.amount })).sort((x, y) => x.day.localeCompare(y.day)) }) });
+      const b = await r.json(); if (!r.ok) throw new Error(typeof b.detail === "string" ? b.detail : "Could not write the letter.");
+      $("l-text").value = b.text; $("l-text").hidden = false; $("l-copy").hidden = false;
+      $("l-note").textContent = (b.written_by === "template" ? "Written from a fixed template." : `The request was written by ${b.written_by}.`)
+        + " The name, the date and every charge underneath were added by code from the statement. Check them before you send it.";
+    } catch (e) { $("l-note").textContent = e.message; }
+    finally { $("l-write").disabled = false; }
+  });
+  $("l-copy").addEventListener("click", async () => { try { await navigator.clipboard.writeText($("l-text").value); $("l-copy").textContent = "Copied"; setTimeout(() => $("l-copy").textContent = "Copy", 1500); } catch (e) { $("l-text").select(); } });
+
+  function render() {
+    const ms = months(), live = data.ghosts.filter((g) => g.active), rest = data.ghosts.filter((g) => !g.active);
+    const stat = (k, v, cls) => h("div", { class: "stat " + (cls || "") }, h("div", { class: "k" }, k), h("div", { class: "v" }, v));
+    $("summary").replaceChildren(
+      data.died ? stat(`Taken since ${holder()} died on ${fmtDay(data.died)}`, money.format(data.since_died_total), "big mourning")
+        : stat("Haunting you every year", money.format(data.per_year), "big"),
+      stat("Still charging", live.length),
+      stat("Price rises", data.price_rises),
+      stat("Charged twice", data.duplicates.length));
+    if (data.died) $("summary").children[1].replaceWith(stat("Haunting every year", money.format(data.per_year)));
+    $("haunting-note").textContent = `${money.format(data.per_month)} a month, from ${fmtDay(data.start)} to ${fmtDay(data.end)}`;
+    $("haunting").replaceChildren(...(live.length ? live.map((g) => ghostCard(g, ms)) : [h("p", { class: "sub" }, "No recurring charges are still running. This statement is not haunted.")]));
+    $("dupes-wrap").hidden = !data.duplicates.length;
+    $("dupes").replaceChildren(...data.duplicates.map((d) => h("div", { class: "item" },
+      h("div", { class: "grow" }, h("b", null, d.merchant), h("small", null, d.descriptions[1])), h("span", null, fmtDay(d.day)), h("b", null, money.format(d.amount)))));
+    $("rested-wrap").hidden = !rest.length;
+    $("rested").replaceChildren(...rest.map((g) => h("div", { class: "item" },
+      h("div", { class: "grow" }, h("b", null, g.merchant), h("small", null, `${g.count} charges, ${money.format(g.amount)} ${per[g.cadence]}`)),
+      h("span", { class: "tag rest" }, "Last on " + fmtDay(g.last)))));
+    const m = data.model, s = m.stats;
+    const how = [
+      `Read ${data.transactions} transactions from ${fmtDay(data.start)} to ${fmtDay(data.end)}. Dates and amounts are read by code, never by the model.`,
+      "A ghost is a payment to the same merchant at a steady rhythm (weekly, monthly, every 3 months or yearly) for a steady amount. Grocery shops and restaurants repeat too, but their amounts wander, so they are left out.",
+      "It is still haunting if its next charge falls after the statement ends. A price rise is a later block of charges at a higher amount. A trial is a first charge of 1.00 or less followed by the full price.",
+      s ? `${m.name} read the merchant names: it named ${s.named} of ${s.asked}. ${s.dropped_unsupported} names were dropped because the bank's text did not back them up${s.errors ? `, and ${s.errors} could not be read because the model did not answer` : ""}.`
+        : "No model was used: merchant names come from the bank's own text.",
+      data.set_aside && data.set_aside.length ? `Set aside as transfers to people, not subscriptions: ${data.set_aside.join(", ")}.` : null,
+      data.died ? `Charges dated after ${fmtDay(data.died)} count as taken since ${holder()} died. The letters ask for those to be refunded.` : null,
+    ].filter(Boolean);
+    $("how-list").replaceChildren(...how.map((t) => h("li", null, t)));
+    updateBar();
+  }
+})();
+</script>
+</body>
+</html>

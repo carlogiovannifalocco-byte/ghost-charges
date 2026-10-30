@@ -1,0 +1,928 @@
+{
+  "it-intesa-style.csv": {
+    "rows": 172,
+    "recurring": [
+      {
+        "merchant": "Netflix",
+        "cadence": "monthly",
+        "amounts": [
+          13.99,
+          13.99,
+          13.99,
+          13.99,
+          13.99,
+          15.99,
+          15.99,
+          15.99,
+          15.99,
+          15.99,
+          15.99,
+          15.99
+        ],
+        "count": 12,
+        "first": "2025-11-10",
+        "last": "2026-10-07",
+        "active_at_end": true,
+        "price_rise": true,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "PAGAMENTO POS 13,99 EUR DEL 06.11.2025 A (NLD) NETFLIX.COM AMSTERDAM CARTA N. *4417",
+          "PAGAMENTO POS 13,99 EUR DEL 06.12.2025 A (NLD) NETFLIX.COM AMSTERDAM CARTA N. *4417",
+          "PAGAMENTO POS 13,99 EUR DEL 06.01.2026 A (NLD) NETFLIX.COM AMSTERDAM CARTA N. *4417",
+          "PAGAMENTO POS 13,99 EUR DEL 06.02.2026 A (NLD) NETFLIX.COM AMSTERDAM CARTA N. *4417"
+        ]
+      },
+      {
+        "merchant": "Spotify",
+        "cadence": "monthly",
+        "amounts": [
+          10.99,
+          10.99,
+          10.99,
+          10.99,
+          10.99,
+          10.99,
+          10.99
+        ],
+        "count": 7,
+        "first": "2025-11-20",
+        "last": "2026-05-20",
+        "active_at_end": false,
+        "price_rise": false,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "PAGAMENTO TRAMITE PAYPAL SPOTIFY AB ID 2110370942646 CARTA N. *4417",
+          "PAGAMENTO TRAMITE PAYPAL *SPOTIFY ID 6740068890798 CARTA N. *4417",
+          "PAGAMENTO TRAMITE PAYPAL SPOTIFY AB ID 4439592033773 CARTA N. *4417",
+          "PAGAMENTO TRAMITE PAYPAL *SPOTIFY ID 6173890656333 CARTA N. *4417"
+        ]
+      },
+      {
+        "merchant": "Fastweb",
+        "cadence": "monthly",
+        "amounts": [
+          27.95,
+          27.95,
+          27.95,
+          27.95,
+          27.95,
+          27.95,
+          27.95,
+          27.95,
+          27.95,
+          27.95,
+          27.95,
+          27.95
+        ],
+        "count": 12,
+        "first": "2025-11-03",
+        "last": "2026-10-05",
+        "active_at_end": true,
+        "price_rise": false,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "ADDEBITO SDD FASTWEB SPA FATT. 11/2025 CID IT45ZZZ0000012345670151 MANDATO N. 438526335",
+          "ADDEBITO SDD FASTWEB SPA FATT. 12/2025 CID IT45ZZZ0000012345670151 MANDATO N. 913885616",
+          "ADDEBITO SDD FASTWEB SPA FATT. 01/2026 CID IT45ZZZ0000012345670151 MANDATO N. 346601881",
+          "ADDEBITO SDD FASTWEB SPA FATT. 02/2026 CID IT45ZZZ0000012345670151 MANDATO N. 650705694"
+        ]
+      },
+      {
+        "merchant": "Iliad",
+        "cadence": "monthly",
+        "amounts": [
+          9.99,
+          9.99,
+          9.99,
+          9.99,
+          9.99,
+          9.99,
+          9.99,
+          9.99,
+          9.99,
+          9.99,
+          9.99,
+          9.99
+        ],
+        "count": 12,
+        "first": "2025-11-24",
+        "last": "2026-10-22",
+        "active_at_end": true,
+        "price_rise": false,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "ADDEBITO SDD ILIAD ITALIA S.P.A. CID IT77ZZZ0000098765430017 MANDATO N. 412354604",
+          "ADDEBITO SDD ILIAD ITALIA S.P.A. CID IT77ZZZ0000098765430017 MANDATO N. 515015750",
+          "ADDEBITO SDD ILIAD ITALIA S.P.A. CID IT77ZZZ0000098765430017 MANDATO N. 171754410",
+          "ADDEBITO SDD ILIAD ITALIA S.P.A. CID IT77ZZZ0000098765430017 MANDATO N. 118136001"
+        ]
+      },
+      {
+        "merchant": "Amazon Prime",
+        "cadence": "yearly",
+        "amounts": [
+          49.9,
+          49.9
+        ],
+        "count": 2,
+        "first": "2025-11-03",
+        "last": "2026-10-29",
+        "active_at_end": true,
+        "price_rise": false,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "PAGAMENTO POS 49,90 EUR DEL 02.11.2025 A (LUX) AMAZON PRIME*RT5KQ1Z74 AMAZON.IT/PRM CARTA N. *4417",
+          "PAGAMENTO POS 49,90 EUR DEL 28.10.2026 A (LUX) AMZ PRIME IT RINNOVO*NB82HX0 AMAZON.IT CARTA N. *4417"
+        ],
+        "note": "Both yearly renewals fall inside the window (start and end of the export); renewal day drifted by a few days."
+      },
+      {
+        "merchant": "Telepass",
+        "cadence": "quarterly",
+        "amounts": [
+          11.7,
+          11.7,
+          11.7,
+          11.7
+        ],
+        "count": 4,
+        "first": "2025-12-10",
+        "last": "2026-09-10",
+        "active_at_end": true,
+        "price_rise": false,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "ADDEBITO SDD TELEPASS S.P.A. CANONE TRIMESTRALE CID IT12ZZZ0000009771230584 MANDATO N. 526731186",
+          "ADDEBITO SDD TELEPASS S.P.A. CANONE TRIMESTRALE CID IT12ZZZ0000009771230584 MANDATO N. 550747587",
+          "ADDEBITO SDD TELEPASS S.P.A. CANONE TRIMESTRALE CID IT12ZZZ0000009771230584 MANDATO N. 178424325",
+          "ADDEBITO SDD TELEPASS S.P.A. CANONE TRIMESTRALE CID IT12ZZZ0000009771230584 MANDATO N. 707997443"
+        ]
+      },
+      {
+        "merchant": "Disney+",
+        "cadence": "monthly",
+        "amounts": [
+          1.99,
+          9.99,
+          9.99,
+          9.99,
+          9.99,
+          9.99,
+          9.99,
+          9.99,
+          9.99,
+          9.99
+        ],
+        "count": 10,
+        "first": "2026-01-15",
+        "last": "2026-10-15",
+        "active_at_end": true,
+        "price_rise": false,
+        "trial_converted": true,
+        "descriptor_examples": [
+          "PAGAMENTO POS 1,99 EUR DEL 14.01.2026 A (NLD) DISNEYPLUS*X7F2 DISNEYPLUS.COM CARTA N. *4417",
+          "PAGAMENTO POS 9,99 EUR DEL 14.02.2026 A (NLD) DISNEY PLUS AMSTERDAM CARTA N. *4417",
+          "PAGAMENTO POS 9,99 EUR DEL 14.03.2026 A (NLD) DISNEY PLUS AMSTERDAM CARTA N. *4417",
+          "PAGAMENTO POS 9,99 EUR DEL 14.04.2026 A (NLD) DISNEYPLUS*X7F2 DISNEYPLUS.COM CARTA N. *4417"
+        ]
+      },
+      {
+        "merchant": "YouTube Premium",
+        "cadence": "monthly",
+        "amounts": [
+          12.99,
+          12.99,
+          12.99,
+          12.99,
+          12.99,
+          12.99,
+          12.99,
+          12.99,
+          12.99,
+          12.99,
+          12.99,
+          12.99
+        ],
+        "count": 12,
+        "first": "2025-11-26",
+        "last": "2026-10-26",
+        "active_at_end": true,
+        "price_rise": false,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "PAGAMENTO POS 12,99 EUR DEL 25.11.2025 A (IRL) GOOGLE *YouTubePremium g.co/helppay# CARTA N. *4417",
+          "PAGAMENTO POS 12,99 EUR DEL 25.12.2025 A (IRL) GOOGLE *YouTubePremium g.co/helppay# CARTA N. *4417",
+          "PAGAMENTO POS 12,99 EUR DEL 25.01.2026 A (IRL) GOOGLE *YouTubePremium g.co/helppay# CARTA N. *4417",
+          "PAGAMENTO POS 12,99 EUR DEL 25.02.2026 A (IRL) GOOGLE *YouTubePremium g.co/helppay# CARTA N. *4417"
+        ]
+      }
+    ],
+    "duplicates": [
+      {
+        "merchant": "YouTube Premium",
+        "date": "2026-07-27",
+        "amount": 12.99,
+        "descriptor": "PAGAMENTO POS 12,99 EUR DEL 25.07.2026 A (IRL) GOOGLE *YouTubePremium g.co/helppay# CARTA N. *4417"
+      }
+    ],
+    "not_subscriptions": [
+      "Esselunga weekly shop (varying amounts, Saturdays)",
+      "rent transfer to Giulia Marchetti (BONIFICO, monthly)",
+      "salary TECNOSTAMPA (monthly, December includes 13th month)",
+      "ENI fuel",
+      "Trattoria Da Pino (repeated restaurant)",
+      "McFit day pass bought twice (Feb, Aug)",
+      "Farmacia San Babila (roughly quarterly, same amount 7,50 - pharmacy, not a subscription)",
+      "Amazon Marketplace one-off orders (not Prime)",
+      "ATM withdrawals"
+    ]
+  },
+  "uk-monzo-style.csv": {
+    "rows": 182,
+    "recurring": [
+      {
+        "merchant": "Netflix",
+        "cadence": "monthly",
+        "amounts": [
+          10.99,
+          10.99,
+          10.99,
+          10.99,
+          10.99,
+          10.99,
+          12.99,
+          12.99,
+          12.99,
+          12.99,
+          12.99,
+          12.99
+        ],
+        "count": 12,
+        "first": "2025-11-09",
+        "last": "2026-10-09",
+        "active_at_end": true,
+        "price_rise": true,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "Netflix | NETFLIX.COM            AMSTERDAM     NLD",
+          "Netflix | Netflix.com            866-579-7172  NLD",
+          "Netflix | NETFLIX.COM            LOS GATOS     USA"
+        ]
+      },
+      {
+        "merchant": "Apple iCloud+",
+        "cadence": "monthly",
+        "amounts": [
+          2.99,
+          2.99,
+          2.99,
+          2.99,
+          2.99,
+          2.99,
+          2.99,
+          2.99,
+          2.99,
+          2.99,
+          2.99,
+          2.99
+        ],
+        "count": 12,
+        "first": "2025-11-04",
+        "last": "2026-10-04",
+        "active_at_end": true,
+        "price_rise": false,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "Apple | APPLE.COM/BILL         CORK          IRL"
+        ]
+      },
+      {
+        "merchant": "Apple TV+ (billed via Apple)",
+        "cadence": "monthly",
+        "amounts": [
+          8.99,
+          8.99,
+          8.99,
+          8.99,
+          8.99,
+          8.99,
+          8.99,
+          8.99
+        ],
+        "count": 8,
+        "first": "2026-03-17",
+        "last": "2026-10-17",
+        "active_at_end": true,
+        "price_rise": false,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "Apple | APPLE.COM/BILL         ITUNES.COM    IRL"
+        ],
+        "note": "Same merchant name 'Apple' and almost the same descriptor as iCloud+; separate subscription, told apart by amount (8.99) and charge day (~17th)."
+      },
+      {
+        "merchant": "PureGym",
+        "cadence": "monthly",
+        "amounts": [
+          24.99,
+          24.99,
+          24.99,
+          24.99,
+          24.99,
+          24.99
+        ],
+        "count": 6,
+        "first": "2025-11-03",
+        "last": "2026-04-01",
+        "active_at_end": false,
+        "price_rise": false,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "PureGym Ltd | PUREGYM LTD            PG-0048813"
+        ]
+      },
+      {
+        "merchant": "Oddbox",
+        "cadence": "weekly",
+        "amounts": [
+          13.49,
+          13.49,
+          13.49,
+          13.49,
+          13.49,
+          13.49,
+          13.49,
+          13.49,
+          13.49,
+          13.49,
+          13.49,
+          13.49,
+          13.49,
+          13.49,
+          13.49,
+          13.49,
+          13.49,
+          13.49
+        ],
+        "count": 18,
+        "first": "2026-07-02",
+        "last": "2026-10-29",
+        "active_at_end": true,
+        "price_rise": false,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "Oddbox | ODDBOX                 LONDON        GBR"
+        ]
+      },
+      {
+        "merchant": "Audible",
+        "cadence": "monthly",
+        "amounts": [
+          0.99,
+          8.99,
+          8.99,
+          8.99,
+          8.99,
+          8.99,
+          8.99,
+          8.99,
+          8.99,
+          8.99
+        ],
+        "count": 10,
+        "first": "2026-01-12",
+        "last": "2026-10-12",
+        "active_at_end": true,
+        "price_rise": false,
+        "trial_converted": true,
+        "descriptor_examples": [
+          "Audible | Audible UK*2F8KD71L3   amzn.co.uk/pm LUX",
+          "Audible | AUDIBLE UK             ADBL.CO/PYMT  GBR"
+        ]
+      },
+      {
+        "merchant": "Cursor (AI code editor, billed in USD)",
+        "cadence": "monthly",
+        "amounts": [
+          15.37,
+          14.8,
+          15.56,
+          15.62,
+          14.99,
+          14.72,
+          15.81,
+          15.09,
+          15.76,
+          15.31,
+          15.78,
+          15.81
+        ],
+        "count": 12,
+        "first": "2025-11-21",
+        "last": "2026-10-21",
+        "active_at_end": true,
+        "price_rise": false,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "CURSOR AI POWERED IDE | CURSOR AI POWERED IDE  NEW YORK      USA"
+        ],
+        "note": "Fixed USD 20.00 price; GBP amount varies every month only because of the FX rate (not a price rise)."
+      },
+      {
+        "merchant": "Harry's razor refills",
+        "cadence": "quarterly",
+        "amounts": [
+          18.5,
+          18.5,
+          18.5,
+          18.5
+        ],
+        "count": 4,
+        "first": "2025-11-26",
+        "last": "2026-08-27",
+        "active_at_end": true,
+        "price_rise": false,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "Harry's | HARRYS.COM             LONDON        GBR"
+        ]
+      },
+      {
+        "merchant": "Deliveroo Plus",
+        "cadence": "monthly",
+        "amounts": [
+          3.49,
+          3.49,
+          3.49,
+          3.49,
+          3.49,
+          3.49,
+          3.49,
+          3.49,
+          3.49,
+          3.49,
+          3.49,
+          3.49
+        ],
+        "count": 12,
+        "first": "2025-11-28",
+        "last": "2026-10-28",
+        "active_at_end": true,
+        "price_rise": false,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "Deliveroo | DELIVEROO PLUS SUBS    LONDON        GBR"
+        ]
+      }
+    ],
+    "duplicates": [
+      {
+        "merchant": "Deliveroo Plus",
+        "date": "2026-08-29",
+        "amount": 3.49,
+        "descriptor": "Deliveroo | DELIVEROO PLUS SUBS    LONDON        GBR"
+      }
+    ],
+    "not_subscriptions": [
+      "Tesco weekly-ish shop (varying amounts)",
+      "rent standing order to Harriet Pemberton",
+      "salary Brightwell Analytics",
+      "Octopus Energy direct debit (monthly bill, amount varies - a utility, not a forgotten subscription)",
+      "TfL travel",
+      "Pret A Manger (repeated)",
+      "Shell fuel",
+      "Gymbox day pass bought twice",
+      "Amazon one-off orders"
+    ]
+  },
+  "us-chase-style.csv": {
+    "rows": 180,
+    "recurring": [
+      {
+        "merchant": "Netflix",
+        "cadence": "monthly",
+        "amounts": [
+          15.49,
+          15.49,
+          17.99,
+          17.99,
+          17.99,
+          17.99,
+          17.99,
+          17.99,
+          17.99,
+          17.99,
+          17.99,
+          17.99
+        ],
+        "count": 12,
+        "first": "2025-11-17",
+        "last": "2026-10-15",
+        "active_at_end": true,
+        "price_rise": true,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "NETFLIX  INC LOS GATOS CA",
+          "NETFLIX.COM NETFLIX.COM CA",
+          "NETFLIX.COM 866-579-7172 CA"
+        ]
+      },
+      {
+        "merchant": "Spotify",
+        "cadence": "monthly",
+        "amounts": [
+          11.99,
+          11.99,
+          11.99,
+          11.99,
+          11.99,
+          11.99,
+          11.99,
+          11.99
+        ],
+        "count": 8,
+        "first": "2025-11-04",
+        "last": "2026-06-03",
+        "active_at_end": false,
+        "price_rise": false,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "SPOTIFY P2C81F0A9D NEW YORK NY",
+          "SPOTIFY USA 877-778-1161 NY",
+          "Spotify USA New York NY"
+        ]
+      },
+      {
+        "merchant": "Apple iCloud+",
+        "cadence": "monthly",
+        "amounts": [
+          2.99,
+          2.99,
+          2.99,
+          2.99,
+          2.99,
+          2.99,
+          2.99,
+          2.99,
+          2.99,
+          2.99,
+          2.99,
+          2.99
+        ],
+        "count": 12,
+        "first": "2025-11-10",
+        "last": "2026-10-08",
+        "active_at_end": true,
+        "price_rise": false,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "APPLE.COM/BILL 866-712-7753 CA"
+        ]
+      },
+      {
+        "merchant": "Amazon Prime",
+        "cadence": "yearly",
+        "amounts": [
+          139.0,
+          139.0
+        ],
+        "count": 2,
+        "first": "2025-11-04",
+        "last": "2026-10-27",
+        "active_at_end": true,
+        "price_rise": false,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "Amazon Prime*2K7XY12Q0 Amzn.com/bill WA",
+          "AMAZON PRIME*NB4TT31A2 AMZN.COM/BILL WA"
+        ]
+      },
+      {
+        "merchant": "DoorDash DashPass",
+        "cadence": "monthly",
+        "amounts": [
+          1.0,
+          9.99,
+          9.99,
+          9.99,
+          9.99,
+          9.99,
+          9.99,
+          9.99,
+          9.99
+        ],
+        "count": 9,
+        "first": "2026-02-19",
+        "last": "2026-10-21",
+        "active_at_end": true,
+        "price_rise": false,
+        "trial_converted": true,
+        "descriptor_examples": [
+          "DOORDASH*DASHPASS SAN FRANCISCO CA",
+          "DD *DOORDASH DASHPASS 855-9731040 CA"
+        ]
+      },
+      {
+        "merchant": "HelloFresh",
+        "cadence": "weekly",
+        "amounts": [
+          69.93,
+          69.93,
+          69.93,
+          69.93,
+          69.93,
+          69.93,
+          69.93,
+          69.93,
+          69.93,
+          69.93,
+          69.93,
+          69.93,
+          69.93,
+          69.93,
+          69.93,
+          69.93
+        ],
+        "count": 16,
+        "first": "2026-03-05",
+        "last": "2026-06-26",
+        "active_at_end": false,
+        "price_rise": false,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "HLLFRSH*HELLOFRESH US NEW YORK NY",
+          "HELLOFRESH 646-846-3663 NY"
+        ]
+      },
+      {
+        "merchant": "Dollar Shave Club",
+        "cadence": "quarterly",
+        "amounts": [
+          26.0,
+          26.0,
+          26.0,
+          26.0
+        ],
+        "count": 4,
+        "first": "2025-12-03",
+        "last": "2026-09-01",
+        "active_at_end": true,
+        "price_rise": false,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "DOLLAR SHAVE CLUB 310-975-8528 CA"
+        ]
+      }
+    ],
+    "duplicates": [
+      {
+        "merchant": "Netflix",
+        "date": "2026-03-16",
+        "amount": 17.99,
+        "descriptor": "NETFLIX  INC LOS GATOS CA"
+      }
+    ],
+    "not_subscriptions": [
+      "Trader Joe's weekly shop (varying amounts)",
+      "rent paid by monthly paper check (CHECK 1041...)",
+      "biweekly payroll Harborline Logistics",
+      "Con Ed electricity ACH (monthly, varying - utility)",
+      "AMZN Mktp US one-off orders (not Prime)",
+      "Joe's Pizza (repeated restaurant)",
+      "Shell fuel",
+      "Blink Fitness day pass bought twice",
+      "Zelle transfers",
+      "ATM withdrawals"
+    ]
+  },
+  "de-n26-style.csv": {
+    "rows": 132,
+    "recurring": [
+      {
+        "merchant": "Netflix (via PayPal)",
+        "cadence": "monthly",
+        "amounts": [
+          12.99,
+          12.99,
+          12.99,
+          12.99,
+          12.99,
+          12.99,
+          12.99,
+          12.99,
+          12.99,
+          12.99
+        ],
+        "count": 10,
+        "first": "2026-01-12",
+        "last": "2026-10-12",
+        "active_at_end": true,
+        "price_rise": false,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "PayPal Europe S.a.r.l. et Cie S.C.A | 3052401819295 PP.4471.PP . NETFLIX INTERNATIONAL B.V., Ihr Einkauf bei NETFLIX INTERNATIONAL B.V.",
+          "PayPal Europe S.a.r.l. et Cie S.C.A | 7675137951147 PP.4471.PP . NETFLIX INTERNATIONAL B.V., Ihr Einkauf bei NETFLIX INTERNATIONAL B.V.",
+          "PayPal Europe S.a.r.l. et Cie S.C.A | 6094798265854 PP.4471.PP . NETFLIX INTERNATIONAL B.V., Ihr Einkauf bei NETFLIX INTERNATIONAL B.V.",
+          "PayPal Europe S.a.r.l. et Cie S.C.A | 4951494884074 PP.4471.PP . NETFLIX INTERNATIONAL B.V., Ihr Einkauf bei NETFLIX INTERNATIONAL B.V."
+        ],
+        "note": "Empfänger is PayPal; the real merchant only appears in Verwendungszweck."
+      },
+      {
+        "merchant": "Spotify",
+        "cadence": "monthly",
+        "amounts": [
+          10.99,
+          10.99,
+          10.99,
+          10.99,
+          10.99,
+          12.99,
+          12.99,
+          12.99,
+          12.99,
+          12.99
+        ],
+        "count": 10,
+        "first": "2026-01-05",
+        "last": "2026-10-06",
+        "active_at_end": true,
+        "price_rise": true,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "Spotify P3A0B7E2C1",
+          "SPOTIFY AB",
+          "Spotify"
+        ]
+      },
+      {
+        "merchant": "O2 / Telefonica mobile",
+        "cadence": "monthly",
+        "amounts": [
+          19.99,
+          19.99,
+          19.99,
+          19.99,
+          19.99,
+          19.99,
+          19.99,
+          19.99,
+          19.99,
+          19.99
+        ],
+        "count": 10,
+        "first": "2026-01-02",
+        "last": "2026-10-02",
+        "active_at_end": true,
+        "price_rise": false,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "Telefonica Germany GmbH & Co. OHG | Kd-Nr. 6044718823 Rg-Nr. 1039899852 Ihre Rechnung vom 31.12.2025",
+          "Telefonica Germany GmbH & Co. OHG | Kd-Nr. 6044718823 Rg-Nr. 4793109873 Ihre Rechnung vom 31.01.2026",
+          "Telefonica Germany GmbH & Co. OHG | Kd-Nr. 6044718823 Rg-Nr. 9351125766 Ihre Rechnung vom 28.02.2026",
+          "Telefonica Germany GmbH & Co. OHG | Kd-Nr. 6044718823 Rg-Nr. 3420121036 Ihre Rechnung vom 31.03.2026"
+        ]
+      },
+      {
+        "merchant": "Rundfunkbeitrag (ARD ZDF Deutschlandradio)",
+        "cadence": "quarterly",
+        "amounts": [
+          55.08,
+          55.08,
+          55.08,
+          55.08
+        ],
+        "count": 4,
+        "first": "2026-01-15",
+        "last": "2026-10-15",
+        "active_at_end": true,
+        "price_rise": false,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "Rundfunk ARD, ZDF, DRadio | Beitragsnummer 512 873 409 Rundfunkbeitrag 01.2026 - 03.2026",
+          "Rundfunk ARD, ZDF, DRadio | Beitragsnummer 512 873 409 Rundfunkbeitrag 04.2026 - 06.2026",
+          "Rundfunk ARD, ZDF, DRadio | Beitragsnummer 512 873 409 Rundfunkbeitrag 07.2026 - 09.2026",
+          "Rundfunk ARD, ZDF, DRadio | Beitragsnummer 512 873 409 Rundfunkbeitrag 10.2026 - 12.2026"
+        ]
+      },
+      {
+        "merchant": "Urban Sports Club",
+        "cadence": "monthly",
+        "amounts": [
+          49.0,
+          49.0,
+          49.0,
+          49.0,
+          49.0
+        ],
+        "count": 5,
+        "first": "2026-01-01",
+        "last": "2026-05-01",
+        "active_at_end": false,
+        "price_rise": false,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "URBAN SPORTS GMBH | USC Mitgliedschaft M 01/2026 Mitglied 88213907",
+          "URBAN SPORTS GMBH | USC Mitgliedschaft M 02/2026 Mitglied 88213907",
+          "URBAN SPORTS GMBH | USC Mitgliedschaft M 03/2026 Mitglied 88213907",
+          "URBAN SPORTS GMBH | USC Mitgliedschaft M 04/2026 Mitglied 88213907"
+        ]
+      },
+      {
+        "merchant": "Notion (billed via Paddle)",
+        "cadence": "monthly",
+        "amounts": [
+          9.6,
+          9.6,
+          9.6,
+          9.6,
+          9.6,
+          9.6,
+          9.6,
+          9.6,
+          9.6,
+          9.6
+        ],
+        "count": 10,
+        "first": "2026-01-23",
+        "last": "2026-10-23",
+        "active_at_end": true,
+        "price_rise": false,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "PADDLE.NET* NOTION LABS",
+          "PADDLE.NET* NOTION"
+        ]
+      },
+      {
+        "merchant": "Kindle Unlimited",
+        "cadence": "monthly",
+        "amounts": [
+          0.0,
+          11.99,
+          11.99,
+          11.99,
+          11.99,
+          11.99,
+          11.99,
+          11.99
+        ],
+        "count": 8,
+        "first": "2026-03-17",
+        "last": "2026-10-17",
+        "active_at_end": true,
+        "price_rise": false,
+        "trial_converted": true,
+        "descriptor_examples": [
+          "Amazon Digital Germany GmbH",
+          "AMAZON DIGITAL KINDLE UNLTD"
+        ]
+      },
+      {
+        "merchant": "Deutschlandticket (BVG)",
+        "cadence": "monthly",
+        "amounts": [
+          63.0,
+          63.0,
+          63.0,
+          63.0,
+          63.0,
+          63.0,
+          63.0,
+          63.0,
+          63.0,
+          63.0
+        ],
+        "count": 10,
+        "first": "2026-01-01",
+        "last": "2026-10-01",
+        "active_at_end": true,
+        "price_rise": false,
+        "trial_converted": false,
+        "descriptor_examples": [
+          "BVG Berliner Verkehrsbetriebe | Deutschlandticket Abo-Nr. 7731902 01/2026",
+          "BVG Berliner Verkehrsbetriebe | Deutschlandticket Abo-Nr. 7731902 02/2026",
+          "BVG Berliner Verkehrsbetriebe | Deutschlandticket Abo-Nr. 7731902 03/2026",
+          "BVG Berliner Verkehrsbetriebe | Deutschlandticket Abo-Nr. 7731902 04/2026"
+        ]
+      }
+    ],
+    "duplicates": [
+      {
+        "merchant": "Spotify",
+        "date": "2026-08-06",
+        "amount": 12.99,
+        "descriptor": "Spotify"
+      }
+    ],
+    "not_subscriptions": [
+      "REWE weekly shop (varying amounts)",
+      "rent Überweisung to Katharina Brandt",
+      "salary Lindner & Vogt",
+      "Lieferando orders",
+      "Trattoria Il Gabbiano (repeated restaurant)",
+      "ARAL fuel",
+      "McFit Tageskarte (day pass) bought twice",
+      "one-off transfer to Jonas Weber"
+    ]
+  }
+}
