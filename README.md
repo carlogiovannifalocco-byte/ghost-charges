@@ -49,7 +49,20 @@ Rules only, today:
 
 Be warned: the rules were fixed while looking at these four files, so this is the best case for rules. The two misses are the ones code can't solve: HelloFresh billed as both `HLLFRSH*HELLOFRESH` and `HELLOFRESH`, and Kindle Unlimited billed as both `AMAZON DIGITAL KINDLE UNLTD` and `Amazon Digital Germany GmbH`. Those, and rent, are what the model is for.
 
-<!-- model results and the held-out set go here once they are measured -->
+### A test it was not built on
+
+`eval/heldout/` holds four more invented statements (French, Spanish, Revolut and Dutch ING formats, 30 subscriptions), made by a separate process that never saw this code. On the first run Ghost Charges read **none** of them: their headers and layouts were new to it. After fixing only the CSV reader, and leaving the detection code untouched:
+
+| Rules only, held-out set | |
+|---|---|
+| subscriptions found | 25 / 30 |
+| named right | 14 / 25 |
+| false alarms | 8 (rent to a person, pharmacies) |
+| double charges found | 3 / 4 |
+
+Most wrong names are the bank's own words: `PRLV`, `Recibo`, `Compra`, `Pago`. That is the gap the model is there to close.
+
+<!-- model results go here once they are measured -->
 
 ## Run it
 
