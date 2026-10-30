@@ -117,6 +117,12 @@ def main() -> None:
         total["dup"] += o["duplicates"]; total["dup_found"] += o["duplicates_found"]; total["dup_reported"] += o["duplicates_reported"]
     t = total
     label = out[0]["model"]["name"] if args.model and out[0]["model"]["used"] else "rules only"
+    if args.model:
+        stats = [o["model"].get("stats") or {} for o in out]
+        asked, named, errors = (sum(s.get(k, 0) for s in stats) for k in ("asked", "named", "errors"))
+        print(f"\nmodel asked about {asked} merchants, named {named}, failed on {errors}")
+        if not named:
+            print("WARNING: the model named nothing, so these are rules-only results. Check LLM_BASE_URL and LLM_TIMEOUT.")
     print(f"\n== {label} ==")
     print(f'subscriptions found   {t["found"]}/{t["subs"]}')
     print(f'shown twice (split)   {t["split"]}')

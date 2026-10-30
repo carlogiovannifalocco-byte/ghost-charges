@@ -31,7 +31,10 @@ def analyse(data: bytes, use_model: bool = True, died: date | None = None) -> di
     kinds = {v["merchant"]: v["kind"] for v in named.values()}
     for g in result["ghosts"]:
         g["kind"] = kinds.get(g["merchant"])
-    result["model"] = {"used": bool(stats), "name": names.model_label() if stats else None,
+    # "Used" means the model actually named something: a model that timed out on every call was not used,
+    # and the page must not say it was.
+    used = bool(stats and stats["named"])
+    result["model"] = {"used": used, "name": names.model_label() if stats else None,
                        "local": names.runs_locally() if stats else None, "stats": stats}
     result["transactions"] = read
     # For the account of someone who has died: what each ghost has taken since that day.
