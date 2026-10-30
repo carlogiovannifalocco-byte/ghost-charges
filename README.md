@@ -8,7 +8,7 @@ Drop a CSV export from any bank. Ghost Charges finds every payment that comes ba
 
 It runs on your own computer with an open-weight model (Gemma, through Ollama). A bank statement is the most private file most people own: nothing in it needs to leave the machine.
 
-![Ghost Charges on an invented statement](docs/screenshot.png)
+![Ghost Charges on an invented statement: what was taken since the account holder died, and the letter to Netflix](docs/demo.gif)
 
 ## The model reads, the code decides
 
