@@ -8,5 +8,5 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
       - run: pip install -r requirements-dev.txt
-      - run: GHOST_NO_MODEL=1 pytest -q
+      - run: GHOST_NO_MODEL=1 python -m pytest -q
       - run: python scripts/eval.py
