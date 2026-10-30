@@ -33,7 +33,7 @@ header .pill { margin-left: auto; }
 .hero h2 { font-size: clamp(30px, 6vw, 52px); line-height: 1.08; margin: 0 0 14px; letter-spacing: -.02em; }
 .hero h2 em { font-style: normal; color: var(--ecto); text-shadow: 0 0 24px rgba(157,242,180,.35); }
 .hero p { color: var(--muted); max-width: 620px; margin: 0 auto; font-size: 17px; }
-.drop { margin: 28px auto 0; max-width: 640px; border: 1.5px dashed #3a4459; border-radius: var(--radius); background: var(--bg2);
+.drop { display: block; margin: 28px auto 0; max-width: 640px; border: 1.5px dashed #3a4459; border-radius: var(--radius); background: var(--bg2);
   padding: 28px 20px; text-align: center; transition: border-color .2s, background .2s; cursor: pointer; }
 .drop:hover, .drop.over { border-color: var(--ecto); background: #161c26; }
 .drop b { display: block; font-size: 17px; margin-bottom: 4px; }
@@ -108,6 +108,14 @@ input.f, select.f, textarea.f { font: inherit; font-size: 15px; color: var(--tex
 input.f:focus, select.f:focus, textarea.f:focus { outline: 2px solid var(--violet); outline-offset: 1px; }
 .stat.mourning { background: linear-gradient(135deg, rgba(185,164,255,.18), rgba(157,242,180,.08)); border-color: rgba(185,164,255,.45); }
 .stat.mourning .v { color: var(--violet); }
+/* The bank's own words: the line a family cannot decode, shown so they can match it to the statement. */
+.bank { margin: 8px 0 0; font: 12px/1.45 ui-monospace, Consolas, monospace; color: var(--muted); overflow-wrap: anywhere; }
+.bank span { display: block; font: 600 11px/1.4 system-ui, sans-serif; letter-spacing: .02em; }
+/* An account of someone who has died is not a joke: no bouncing ghosts there. */
+body.mourning .ghost-ic { display: none; }
+body.mourning .logo { animation: none; }
+.closing { max-width: 640px; margin: 28px auto 0; text-align: center; color: var(--muted); }
+.closing b { display: block; color: var(--text); font-weight: 600; margin-bottom: 6px; }
 .tag.since { color: var(--violet); border-color: rgba(185,164,255,.45); background: rgba(185,164,255,.10); }
 dialog { background: var(--bg2); color: var(--text); border: 1px solid var(--line); border-radius: var(--radius); padding: 0; width: min(640px, calc(100vw - 24px)); box-shadow: var(--shadow); }
 dialog::backdrop { background: rgba(0,0,0,.6); }
@@ -163,8 +171,9 @@ footer { color: var(--muted); font-size: 13px; text-align: center; margin-top: 4
 
   <main id="results" hidden>
     <div class="summary" id="summary"></div>
-    <div class="section-title"><h3>Still haunting you</h3><span id="haunting-note"></span></div>
+    <div class="section-title"><h3 id="haunting-title">Still haunting you</h3><span id="haunting-note"></span></div>
     <div class="grid" id="haunting"></div>
+    <div class="closing" id="closing" hidden><b>The memory stays. The charges can stop.</b>If a line above means nothing to you, your bank can usually tell you who is behind a direct debit and how to stop it. Bring the words shown on the card.</div>
     <div id="dupes-wrap" hidden>
       <div class="section-title"><h3>Charged twice</h3><span>Same merchant, same amount, within two days</span></div>
       <div class="list" id="dupes"></div>
@@ -290,6 +299,7 @@ footer { color: var(--muted); font-size: 13px; text-align: center; margin-top: 4
         h("div", null, h("div", { class: "name" }, g.merchant), h("div", { class: "sub" }, `${g.count} charges since ${fmtDay(g.first)}`)),
         h("div", { class: "price" }, h("b", null, money.format(g.amount)), h("small", null, per[g.cadence]))),
       timeline(g, ms),
+      h("p", { class: "bank" }, h("span", null, "On the statement it says"), g.charges[g.charges.length - 1].description),
       h("div", { class: "tags" }, tags),
       h("div", { class: "row-actions" },
         h("span", { class: "sub" }, h("b", { style: "color:var(--text)" }, money.format(g.per_year)), " a year · ", money.format(g.paid_in_period), " paid in this statement"),
@@ -308,7 +318,7 @@ footer { color: var(--muted); font-size: 13px; text-align: center; margin-top: 4
     const list = data.ghosts.filter((g) => g.active && buried.has(g.key + g.cadence + g.amount));
     $("bar").hidden = !list.length;
     const sum = list.reduce((a, g) => a + Number(g.per_year), 0);
-    $("bar-text").innerHTML = ""; $("bar-text").append("Cancelling ", h("b", null, list.length), list.length === 1 ? " ghost saves " : " ghosts saves ", h("b", null, money.format(sum)), " a year");
+    $("bar-text").innerHTML = ""; $("bar-text").append("Stopping ", h("b", null, list.length), list.length === 1 ? " charge saves " : " charges saves ", h("b", null, money.format(sum)), " a year");
   }
   $("copy").addEventListener("click", async () => {
     const list = data.ghosts.filter((g) => g.active && buried.has(g.key + g.cadence + g.amount));
@@ -340,6 +350,10 @@ footer { color: var(--muted); font-size: 13px; text-align: center; margin-top: 4
   $("l-copy").addEventListener("click", async () => { try { await navigator.clipboard.writeText($("l-text").value); $("l-copy").textContent = "Copied"; setTimeout(() => $("l-copy").textContent = "Copy", 1500); } catch (e) { $("l-text").select(); } });
 
   function render() {
+    document.body.classList.toggle("mourning", !!data.died);
+    $("haunting-title").textContent = data.died ? "Still charging" : "Still haunting you";
+    const closing = $("closing");
+    closing.hidden = !data.died;
     const ms = months(), live = data.ghosts.filter((g) => g.active), rest = data.ghosts.filter((g) => !g.active);
     const stat = (k, v, cls) => h("div", { class: "stat " + (cls || "") }, h("div", { class: "k" }, k), h("div", { class: "v" }, v));
     $("summary").replaceChildren(
@@ -348,7 +362,7 @@ footer { color: var(--muted); font-size: 13px; text-align: center; margin-top: 4
       stat("Still charging", live.length),
       stat("Price rises", data.price_rises),
       stat("Charged twice", data.duplicates.length));
-    if (data.died) $("summary").children[1].replaceWith(stat("Haunting every year", money.format(data.per_year)));
+    if (data.died) $("summary").children[1].replaceWith(stat("Still going, every year", money.format(data.per_year)));
     $("haunting-note").textContent = `${money.format(data.per_month)} a month, from ${fmtDay(data.start)} to ${fmtDay(data.end)}`;
     $("haunting").replaceChildren(...(live.length ? live.map((g) => ghostCard(g, ms)) : [h("p", { class: "sub" }, "No recurring charges are still running. This statement is not haunted.")]));
     $("dupes-wrap").hidden = !data.duplicates.length;
