@@ -1,0 +1,60 @@
+
+fr-credit-agricole-style.csv: could not read it: I could not find the date and amount columns. Is this a bank statement export?
+
+es-santander-style.csv: could not read it: I could not find the date and amount columns. Is this a bank statement export?
+
+ie-revolut-style.csv: could not read it: I could not find the date and amount columns. Is this a bank statement export?
+
+nl-ing-style.csv: could not read it: I could not find the date and amount columns. Is this a bank statement export?
+
+fr-credit-agricole-style.csv  (0.0s)
+  ✗ Canal+                                     missed                       
+  ✗ Free Mobile                                missed                       
+  ✗ Deezer                                     missed                       
+  ✗ Apple iCloud+                              missed                       
+  ✗ Apple Music                                missed                       
+  ✗ Amazon Prime                               missed                       
+  ✗ Basic-Fit                                  missed                       
+  ✗ ChatGPT Plus (OpenAI, billed in USD)       missed                       
+  doubles: 0/1 found, 0 reported
+
+es-santander-style.csv  (0.0s)
+  ✗ Movistar (Telefonica)                      missed                       
+  ✗ Filmin                                     missed                       
+  ✗ Google One                                 missed                       
+  ✗ Duolingo Super (via Google Play)           missed                       
+  ✗ PlayStation Plus                           missed                       
+  ✗ Glovo Prime                                missed                       
+  ✗ HBO Max                                    missed                       
+  ✗ El Pais (digital subscription)             missed                       
+  doubles: 0/1 found, 0 reported
+
+ie-revolut-style.csv  (0.0s)
+  ✗ HelloFresh                                 missed                       
+  ✗ Uber One                                   missed                       
+  ✗ Midjourney (billed in USD)                 missed                       
+  ✗ Xbox Game Pass                             missed                       
+  ✗ Microsoft 365 Personal                     missed                       
+  ✗ Revolut Premium plan                       missed                       
+  ✗ Strava                                     missed                       
+  doubles: 0/1 found, 0 reported
+
+nl-ing-style.csv  (0.0s)
+  ✗ Ziggo                                      missed                       
+  ✗ Odido mobile                               missed                       
+  ✗ Videoland                                  missed                       
+  ✗ Disney+ (via PayPal)                       missed                       
+  ✗ Nintendo Switch Online                     missed                       
+  ✗ Storytel                                   missed                       
+  ✗ Patreon (billed in USD)                    missed                       
+  doubles: 0/1 found, 0 reported
+
+== rules only ==
+subscriptions found   0/30
+shown twice (split)   0
+named right           0/0
+active/stopped right  0/0
+price rise right      0/0
+trial right           0/0
+false alarms          0
+doubles found         0/4 (0 reported)

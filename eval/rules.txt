@@ -1,0 +1,59 @@
+
+it-intesa-style.csv  (0.0s)
+  ✓ Netflix                                    as Netflix                   
+  ✓ Spotify                                    as Spotify                   
+  ✓ Fastweb                                    as Fastweb                   
+  ✓ Iliad                                      as Iliad                     
+  ✓ Amazon Prime                               as Amazon Prime              
+  ✓ Telepass                                   as Telepass                  
+  ✓ Disney+                                    as Disney                    
+  ✓ YouTube Premium                            as Youtube                   
+  ! false alarm: Bonifico (monthly, 750.00)
+  ! false alarm: Farmacia (quarterly, 7.50)
+  doubles: 1/1 found, 1 reported
+
+uk-monzo-style.csv  (0.0s)
+  ✓ Netflix                                    as Netflix                   
+  ✓ Apple iCloud+                              as Apple                     
+  ✓ Apple TV+ (billed via Apple)               as Apple                     
+  ✓ PureGym                                    as Puregym                   
+  ✓ Oddbox                                     as Oddbox                    
+  ✓ Audible                                    as Audible                   
+  ✓ Cursor (AI code editor, billed in USD)     as Cursor                    
+  ✓ Harry's razor refills                      as Harry'S                   
+  ✓ Deliveroo Plus                             as Deliveroo                 
+  ! false alarm: Harriet (monthly, 1150.00)
+  doubles: 1/1 found, 1 reported
+
+us-chase-style.csv  (0.0s)
+  ✓ Netflix                                    as Netflix                   
+  ✓ Spotify                                    as Spotify                   
+  ✓ Apple iCloud+                              as Apple                     
+  ✓ Amazon Prime                               as Amazon Prime              
+  ✓ DoorDash DashPass                          as Doordash                  
+  ✗ HelloFresh                                 missed                       
+  ✓ Dollar Shave Club                          as Dollar                    
+  ! false alarm: Check (monthly, 2150.00)
+  doubles: 1/1 found, 1 reported
+
+de-n26-style.csv  (0.0s)
+  ✓ Netflix (via PayPal)                       as Netflix                   
+  ✓ Spotify                                    as Spotify                   
+  ✓ O2 / Telefonica mobile                     as Telefonica                
+  ✓ Rundfunkbeitrag (ARD ZDF Deutschlandradio) as Rundfunk                  
+  ✓ Urban Sports Club                          as Urban                     
+  ✓ Notion (billed via Paddle)                 as Notion                    
+  ✗ Kindle Unlimited                           missed                       
+  ✓ Deutschlandticket (BVG)                    as Bvg Berliner              
+  ! false alarm: Katharina (monthly, 1080.00)
+  doubles: 1/1 found, 1 reported
+
+== rules only ==
+subscriptions found   30/32
+shown twice (split)   0
+named right           30/30
+active/stopped right  30/30
+price rise right      30/30
+trial right           30/30
+false alarms          5
+doubles found         4/4 (4 reported)

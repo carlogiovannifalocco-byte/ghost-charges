@@ -1,0 +1,948 @@
+{
+ "fr-credit-agricole-style.csv": {
+  "rows": 180,
+  "recurring": [
+   {
+    "merchant": "Canal+",
+    "cadence": "monthly",
+    "amounts": [
+     25.99,
+     25.99,
+     25.99,
+     25.99,
+     27.99,
+     27.99,
+     27.99,
+     27.99,
+     27.99,
+     27.99,
+     27.99,
+     27.99
+    ],
+    "count": 12,
+    "first": "2025-11-05",
+    "last": "2026-10-05",
+    "active_at_end": true,
+    "price_rise": true,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "PRLV SEPA GROUPE CANAL+\nECH/051125 ID EMETTEUR/FR83ZZZ401857 MDT/++CNL7781093X REF/7556560674238",
+     "PRLV SEPA GROUPE CANAL+\nECH/051225 ID EMETTEUR/FR83ZZZ401857 MDT/++CNL7781093X REF/6897847690826",
+     "PRLV SEPA GROUPE CANAL +\nECH/050126 ID EMETTEUR/FR83ZZZ401857 MDT/++CNL7781093X REF/0728734075354",
+     "PRLV SEPA CANAL+ FRANCE\nECH/050226 ID EMETTEUR/FR83ZZZ401857 MDT/++CNL7781093X REF/4618083354936"
+    ]
+   },
+   {
+    "merchant": "Free Mobile",
+    "cadence": "monthly",
+    "amounts": [
+     15.99,
+     15.99,
+     15.99,
+     15.99,
+     15.99,
+     15.99,
+     15.99,
+     15.99,
+     15.99,
+     15.99,
+     15.99,
+     15.99
+    ],
+    "count": 12,
+    "first": "2025-11-14",
+    "last": "2026-10-14",
+    "active_at_end": true,
+    "price_rise": false,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "PRLV SEPA Free Mobile\nFM-06701054 ECH/141125 ID EMETTEUR/FR11ZZZ432189 MDT/FM5512038 REF/8932450181",
+     "PRLV SEPA FREE MOBILE\nFM-66961452 ECH/151225 ID EMETTEUR/FR11ZZZ432189 MDT/FM5512038 REF/4032413762",
+     "PRLV SEPA FREE MOBILE\nFM-73981711 ECH/140126 ID EMETTEUR/FR11ZZZ432189 MDT/FM5512038 REF/7602644671",
+     "PRLV SEPA Free Mobile\nFM-16643921 ECH/160226 ID EMETTEUR/FR11ZZZ432189 MDT/FM5512038 REF/1834693037"
+    ]
+   },
+   {
+    "merchant": "Deezer",
+    "cadence": "monthly",
+    "amounts": [
+     11.99,
+     11.99,
+     11.99,
+     11.99,
+     11.99,
+     11.99
+    ],
+    "count": 6,
+    "first": "2025-11-19",
+    "last": "2026-04-18",
+    "active_at_end": false,
+    "price_rise": false,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "CB DEEZER PARIS            18/11",
+     "CB DEEZER.COM              18/12",
+     "CB DEEZER.COM              16/01",
+     "CB DEEZER SA 75009         17/02"
+    ]
+   },
+   {
+    "merchant": "Apple iCloud+",
+    "cadence": "monthly",
+    "amounts": [
+     2.99,
+     2.99,
+     2.99,
+     2.99,
+     2.99,
+     2.99,
+     2.99,
+     2.99,
+     2.99,
+     2.99,
+     2.99,
+     2.99
+    ],
+    "count": 12,
+    "first": "2025-11-04",
+    "last": "2026-10-05",
+    "active_at_end": true,
+    "price_rise": false,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "CB APPLE.COM/BILL CORK     03/11",
+     "CB APPLE.COM/BILL CORK     30/11",
+     "CB APPLE.COM/BILL          04/01",
+     "CB APPLE.COM/BILL CORK     01/02"
+    ],
+    "note": "Same biller/descriptor family (APPLE.COM/BILL) as Apple Music; told apart by amount and day."
+   },
+   {
+    "merchant": "Apple Music",
+    "cadence": "monthly",
+    "amounts": [
+     10.99,
+     10.99,
+     10.99,
+     10.99,
+     10.99,
+     10.99,
+     10.99,
+     10.99,
+     10.99,
+     10.99
+    ],
+    "count": 10,
+    "first": "2026-01-21",
+    "last": "2026-10-22",
+    "active_at_end": true,
+    "price_rise": false,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "CB APPLE.COM/BILL ITUNES.COM19/01",
+     "CB APPLE.COM/BILL          19/02",
+     "CB APPLE.COM/BILL          19/03",
+     "CB APPLE.COM/BILL          20/04"
+    ],
+    "note": "Second Apple subscription; the June charge was taken twice (see duplicates)."
+   },
+   {
+    "merchant": "Amazon Prime",
+    "cadence": "yearly",
+    "amounts": [
+     69.9,
+     69.9
+    ],
+    "count": 2,
+    "first": "2025-10-29",
+    "last": "2026-10-27",
+    "active_at_end": true,
+    "price_rise": false,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "CB AMAZON PRIME FR*2K4XT   28/10",
+     "CB AMZ Prime FR*R82LM0     25/10"
+    ],
+    "note": "Yearly; both renewals fall inside the export (first days and last days). One-off Amazon purchases are separate."
+   },
+   {
+    "merchant": "Basic-Fit",
+    "cadence": "monthly",
+    "amounts": [
+     29.99,
+     29.99,
+     29.99,
+     29.99,
+     29.99,
+     29.99,
+     29.99,
+     29.99,
+     29.99
+    ],
+    "count": 9,
+    "first": "2026-02-26",
+    "last": "2026-10-26",
+    "active_at_end": true,
+    "price_rise": false,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "PRLV SEPA BASIC FIT FRANCE SAS\nCotisation BF1838425 ECH/260226 ID EMETTEUR/FR40ZZZ836411 MDT/BFF0031847 REF/654853059",
+     "PRLV SEPA BASIC FIT FRANCE SAS\nCotisation BF0017807 ECH/260326 ID EMETTEUR/FR40ZZZ836411 MDT/BFF0031847 REF/516804848",
+     "PRLV SEPA BASIC FIT FRANCE SAS\nCotisation BF1246835 ECH/270426 ID EMETTEUR/FR40ZZZ836411 MDT/BFF0031847 REF/914376161",
+     "PRLV SEPA BASIC FIT FRANCE SAS\nCotisation BF8049139 ECH/260526 ID EMETTEUR/FR40ZZZ836411 MDT/BFF0031847 REF/547940348"
+    ]
+   },
+   {
+    "merchant": "ChatGPT Plus (OpenAI, billed in USD)",
+    "cadence": "monthly",
+    "amounts": [
+     18.66,
+     17.98,
+     17.73,
+     17.66,
+     17.51,
+     17.7,
+     17.68,
+     17.63,
+     18.54,
+     18.36,
+     17.87
+    ],
+    "count": 11,
+    "first": "2025-12-09",
+    "last": "2026-10-10",
+    "active_at_end": true,
+    "price_rise": false,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "CB OPENAI *CHATGPT SUBSCR  08/12\nUSD 20,00 1 EURO = 1,0717",
+     "CB OPENAI *CHATGPT SUBSCR  08/01\nUSD 20,00 1 EURO = 1,1121",
+     "CB OPENAI *CHATGPT SUBSCR  08/02\nUSD 20,00 1 EURO = 1,1281",
+     "CB CHATGPT SUBSCRIPTION    09/03\nUSD 20,00 1 EURO = 1,1326"
+    ],
+    "note": "USD 20.00 converted to EUR at each month's rate, so the EUR amount varies by a few percent; not a price rise."
+   }
+  ],
+  "duplicates": [
+   {
+    "merchant": "Apple Music",
+    "date": "2026-06-23",
+    "amount": 10.99,
+    "descriptor": "CB APPLE.COM/BILL          21/06"
+   }
+  ],
+  "not_subscriptions": [
+   "Carrefour / Monoprix / Lidl / Biocoop groceries (varying amounts)",
+   "rent transfer to Mme Sophie Garnier (VIR SEPA EMIS LOYER, monthly 890,00)",
+   "salary SARL Ateliers Dubreuil (monthly)",
+   "ENGIE energy direct debit (monthly, amount varies - utility)",
+   "Brasserie Georges (repeated restaurant)",
+   "TotalEnergies fuel",
+   "Pharmacie du Parc (roughly quarterly, similar amounts 18-21 EUR)",
+   "On Air Fitness day pass bought three times (12,00)",
+   "Amazon Payments one-off order (not Prime)",
+   "Fnac / Decathlon / SNCF one-off purchases and their refunds",
+   "cash withdrawals (RETRAIT DAB)"
+  ]
+ },
+ "es-santander-style.csv": {
+  "rows": 184,
+  "recurring": [
+   {
+    "merchant": "Movistar (Telefonica)",
+    "cadence": "monthly",
+    "amounts": [
+     58.9,
+     58.9,
+     61.9,
+     61.9,
+     61.9,
+     61.9,
+     61.9,
+     61.9,
+     61.9,
+     61.9,
+     61.9
+    ],
+    "count": 11,
+    "first": "2025-12-03",
+    "last": "2026-10-05",
+    "active_at_end": true,
+    "price_rise": true,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "Recibo Telefonica De Espana, S.a.u. Nº Recibo 0049 8565 921 Bbbbbb Ref. Mandato 210454228, Referencia 0879511838",
+     "Recibo Telefonica De Espana, S.a.u. Nº Recibo 0049 3107 214 Bbbbbb Ref. Mandato 218793771, Referencia 1698098647",
+     "Recibo Telefonica De Espana, S.a.u. Nº Recibo 0049 2140 652 Bbbbbb Ref. Mandato 210456720, Referencia 9547005876",
+     "Recibo Telefonica De Espana, S.a.u. Nº Recibo 0049 8508 053 Bbbbbb Ref. Mandato 219201662, Referencia 2975889769"
+    ]
+   },
+   {
+    "merchant": "Filmin",
+    "cadence": "monthly",
+    "amounts": [
+     1.0,
+     7.99,
+     7.99,
+     7.99,
+     7.99,
+     7.99,
+     7.99,
+     7.99,
+     7.99
+    ],
+    "count": 9,
+    "first": "2026-02-11",
+    "last": "2026-10-11",
+    "active_at_end": true,
+    "price_rise": false,
+    "trial_converted": true,
+    "descriptor_examples": [
+     "Compra Internet En Filmin Sl, Barcelona, Tarjeta 5489XXXXXXXX1102 , Comision 0,00",
+     "Compra Internet En Www.filmin.es, Barcelona, Tarj. :*481102",
+     "Compra Internet En Www.filmin.es, Barcelona, Tarjeta 5489XXXXXXXX1102 , Comision 0,00",
+     "Compra Internet En Filmin, Barcelona, Tarj. :*481102"
+    ],
+    "note": "Promotional first month at 1,00 then 7,99: trial converted, not a price rise."
+   },
+   {
+    "merchant": "Google One",
+    "cadence": "monthly",
+    "amounts": [
+     1.99,
+     1.99,
+     1.99,
+     1.99,
+     1.99,
+     1.99,
+     1.99,
+     1.99,
+     1.99,
+     1.99,
+     1.99
+    ],
+    "count": 11,
+    "first": "2025-12-06",
+    "last": "2026-10-06",
+    "active_at_end": true,
+    "price_rise": false,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "Compra Internet En Google *google Storage, G.co/helppay#, Tarj. :*481102",
+     "Compra Internet En Google *google One, G.co/helppay#, Tarjeta 5489XXXXXXXX1102 , Comision 0,00",
+     "Compra Internet En Google One, Mountain View, Tarj. :*481102",
+     "Compra Internet En Google *google Storage, G.co/helppay#, Tarjeta 5489XXXXXXXX1102 , Comision 0,00"
+    ],
+    "note": "Same biller as the Duolingo charge (GOOGLE *); told apart by amount (1,99) and day."
+   },
+   {
+    "merchant": "Duolingo Super (via Google Play)",
+    "cadence": "monthly",
+    "amounts": [
+     6.99,
+     6.99,
+     6.99,
+     6.99,
+     6.99,
+     6.99,
+     6.99,
+     6.99,
+     6.99,
+     6.99,
+     6.99
+    ],
+    "count": 11,
+    "first": "2025-12-23",
+    "last": "2026-10-23",
+    "active_at_end": true,
+    "price_rise": false,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "Compra Internet En Google Play Apps, G.co/helppay#, Tarjeta 5489XXXXXXXX1102 , Comision 0,00",
+     "Compra Internet En Google Play Apps, G.co/helppay#, Tarj. :*481102",
+     "Compra Internet En Google *duolingo, G.co/helppay#, Tarjeta 5489XXXXXXXX1102 , Comision 0,00",
+     "Compra Internet En Google *google Play, G.co/helppay#, Tarj. :*481102"
+    ],
+    "note": "Billed through Google Play; some months the descriptor only says 'Google Play' with no app name."
+   },
+   {
+    "merchant": "PlayStation Plus",
+    "cadence": "quarterly",
+    "amounts": [
+     24.99,
+     24.99,
+     24.99,
+     24.99
+    ],
+    "count": 4,
+    "first": "2025-12-12",
+    "last": "2026-09-14",
+    "active_at_end": true,
+    "price_rise": false,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "Compra Internet En Playstation Network, London, Tarj. :*481102",
+     "Compra Internet En Psn*playstation Plus, London, Tarj. :*481102"
+    ]
+   },
+   {
+    "merchant": "Glovo Prime",
+    "cadence": "monthly",
+    "amounts": [
+     5.99,
+     5.99,
+     5.99,
+     5.99,
+     5.99,
+     5.99,
+     5.99,
+     5.99,
+     5.99,
+     5.99,
+     5.99
+    ],
+    "count": 11,
+    "first": "2025-12-20",
+    "last": "2026-10-19",
+    "active_at_end": true,
+    "price_rise": false,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "Pago Movil En Glovo Prime, Barcelona, Tarj. :*481102",
+     "Pago Movil En Glovo*prime Subs, Barcelona, Tarj. :*481102",
+     "Pago Movil En Glovoapp23, Barcelona, Tarj. :*481102"
+    ],
+    "note": "Same merchant as one-off Glovo food orders; only the fixed 5,99 monthly charge is the subscription."
+   },
+   {
+    "merchant": "HBO Max",
+    "cadence": "monthly",
+    "amounts": [
+     9.99,
+     9.99,
+     9.99,
+     9.99,
+     9.99,
+     9.99,
+     9.99,
+     9.99,
+     9.99,
+     9.99,
+     9.99
+    ],
+    "count": 11,
+    "first": "2025-12-08",
+    "last": "2026-10-08",
+    "active_at_end": true,
+    "price_rise": false,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "Compra Internet En Max*hbomax Subscr, Amsterdam, Tarj. :*481102",
+     "Compra Internet En Hbomax.com, Amsterdam, Tarj. :*481102",
+     "Compra Internet En Hbomax.com, Amsterdam, Tarjeta 5489XXXXXXXX1102 , Comision 0,00",
+     "Compra Internet En Hbo Max, Amsterdam, Tarj. :*481102"
+    ],
+    "note": "Same price and cadence (9,99 monthly) as El Pais; separate subscription. The March charge was taken twice."
+   },
+   {
+    "merchant": "El Pais (digital subscription)",
+    "cadence": "monthly",
+    "amounts": [
+     9.99,
+     9.99,
+     9.99,
+     9.99,
+     9.99,
+     9.99,
+     9.99,
+     9.99,
+     9.99,
+     9.99
+    ],
+    "count": 10,
+    "first": "2026-01-16",
+    "last": "2026-10-15",
+    "active_at_end": true,
+    "price_rise": false,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "Compra Internet En Elpais.com, Madrid, Tarjeta 5489XXXXXXXX1102 , Comision 0,00",
+     "Compra Internet En Prisa Noticias Suscrip, Madrid, Tarj. :*481102",
+     "Compra Internet En Ediciones El Pais, Madrid, Tarj. :*481102",
+     "Compra Internet En Prisa Noticias Suscrip, Madrid, Tarjeta 5489XXXXXXXX1102 , Comision 0,00"
+    ],
+    "note": "Billed by the publisher Prisa (Ediciones El Pais); 9,99 like HBO Max."
+   }
+  ],
+  "duplicates": [
+   {
+    "merchant": "HBO Max",
+    "date": "2026-03-11",
+    "amount": 9.99,
+    "descriptor": "Compra Internet En Hbomax.com, Amsterdam, Tarj. :*481102"
+   }
+  ],
+  "not_subscriptions": [
+   "Mercadona groceries (varying amounts)",
+   "rent transfer to Lucia Ferrer Garcia (Transferencia ... Alquiler, monthly 850,00)",
+   "salary Distribuciones Levante (monthly, extra pay in June and December)",
+   "Iberdrola electricity direct debit (monthly, amount varies - utility)",
+   "Bar Casa Paco (repeated bar/restaurant)",
+   "Repsol fuel",
+   "Farmacia Lda. M. Soler (roughly quarterly, 12,35-13,10)",
+   "Altafit day pass (Entrada Dia) bought three times",
+   "Glovo food orders (one-off; only Glovo Prime 5,99 is the subscription)",
+   "Bizum transfers",
+   "Zara purchase and its refund, PcComponentes, Renfe one-offs",
+   "cash withdrawals"
+  ]
+ },
+ "ie-revolut-style.csv": {
+  "rows": 189,
+  "recurring": [
+   {
+    "merchant": "HelloFresh",
+    "cadence": "weekly",
+    "amounts": [
+     29.99,
+     59.99,
+     59.99,
+     59.99,
+     59.99,
+     59.99,
+     59.99,
+     59.99,
+     59.99,
+     59.99,
+     59.99,
+     59.99,
+     59.99,
+     59.99,
+     59.99,
+     59.99,
+     59.99,
+     59.99,
+     59.99
+    ],
+    "count": 19,
+    "first": "2026-06-25",
+    "last": "2026-10-29",
+    "active_at_end": true,
+    "price_rise": false,
+    "trial_converted": true,
+    "descriptor_examples": [
+     "HLLFRSH*HelloFresh",
+     "Hellofresh Dublin",
+     "HLLFRSH*IE",
+     "HelloFresh"
+    ],
+    "note": "Weekly meal box; first box discounted (29,99) then 59,99: trial converted."
+   },
+   {
+    "merchant": "Uber One",
+    "cadence": "monthly",
+    "amounts": [
+     5.99,
+     5.99,
+     5.99,
+     5.99,
+     5.99,
+     5.99,
+     5.99,
+     5.99,
+     5.99,
+     5.99,
+     5.99,
+     5.99
+    ],
+    "count": 12,
+    "first": "2025-11-11",
+    "last": "2026-10-11",
+    "active_at_end": true,
+    "price_rise": false,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "Uber One",
+     "UBER *ONE HELP.UBER.COM",
+     "Uber *One"
+    ],
+    "note": "Same biller as Uber rides (varying amounts); the March fee was taken twice."
+   },
+   {
+    "merchant": "Midjourney (billed in USD)",
+    "cadence": "monthly",
+    "amounts": [
+     8.85,
+     9.41,
+     8.74,
+     9.05,
+     8.93,
+     9.13,
+     8.73,
+     9.32,
+     9.23,
+     9.45
+    ],
+    "count": 10,
+    "first": "2026-01-27",
+    "last": "2026-10-27",
+    "active_at_end": true,
+    "price_rise": false,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "Midjourney",
+     "MIDJOURNEY INC.",
+     "Midjourney Inc"
+    ],
+    "note": "USD 10.00 converted to EUR, so the amount wobbles by a few percent; not a price rise."
+   },
+   {
+    "merchant": "Xbox Game Pass",
+    "cadence": "monthly",
+    "amounts": [
+     17.99,
+     17.99,
+     17.99,
+     17.99,
+     17.99,
+     17.99,
+     17.99
+    ],
+    "count": 7,
+    "first": "2025-11-07",
+    "last": "2026-05-07",
+    "active_at_end": false,
+    "price_rise": false,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "Microsoft*Xbox",
+     "Microsoft*Ultimate 1 Mon"
+    ],
+    "note": "Same biller as Microsoft 365 (Microsoft*); cancelled after May 2026."
+   },
+   {
+    "merchant": "Microsoft 365 Personal",
+    "cadence": "monthly",
+    "amounts": [
+     7.0,
+     7.0,
+     7.0,
+     7.0,
+     10.0,
+     10.0,
+     10.0,
+     10.0,
+     10.0,
+     10.0,
+     10.0,
+     10.0
+    ],
+    "count": 12,
+    "first": "2025-11-02",
+    "last": "2026-10-02",
+    "active_at_end": true,
+    "price_rise": true,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "Microsoft*Store",
+     "MSFT * Microsoft 365",
+     "Microsoft*Microsoft 365 P"
+    ]
+   },
+   {
+    "merchant": "Revolut Premium plan",
+    "cadence": "monthly",
+    "amounts": [
+     7.99,
+     7.99,
+     7.99,
+     7.99,
+     7.99,
+     7.99,
+     7.99,
+     7.99,
+     7.99,
+     7.99,
+     7.99,
+     7.99
+    ],
+    "count": 12,
+    "first": "2025-11-01",
+    "last": "2026-10-01",
+    "active_at_end": true,
+    "price_rise": false,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "Premium plan fee"
+    ],
+    "note": "Bank's own plan fee (Type FEE); same price and cadence as Strava."
+   },
+   {
+    "merchant": "Strava",
+    "cadence": "monthly",
+    "amounts": [
+     7.99,
+     7.99,
+     7.99,
+     7.99,
+     7.99,
+     7.99,
+     7.99,
+     7.99,
+     7.99,
+     7.99,
+     7.99,
+     7.99
+    ],
+    "count": 12,
+    "first": "2025-11-16",
+    "last": "2026-10-16",
+    "active_at_end": true,
+    "price_rise": false,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "STRAVA.COM",
+     "Strava",
+     "Strava Inc."
+    ],
+    "note": "April attempt on the 16th was DECLINED (not charged) and retried successfully next day; the declined row is neither a charge nor a duplicate."
+   }
+  ],
+  "duplicates": [
+   {
+    "merchant": "Uber One",
+    "date": "2026-03-12",
+    "amount": 5.99,
+    "descriptor": "Uber *One"
+   }
+  ],
+  "not_subscriptions": [
+   "Tesco / Lidl / SuperValu groceries (varying amounts)",
+   "rent transfer to Aoife Brennan (monthly 1400.00)",
+   "salary Corrib Software Ltd",
+   "Electric Ireland (monthly, amount varies - utility)",
+   "Bunsen (repeated restaurant)",
+   "Circle K fuel",
+   "Uber rides (varying; only Uber One 5.99 is the subscription)",
+   "Boots pharmacy (roughly quarterly, 16.49-17.20)",
+   "Flyefit day pass bought three times",
+   "top-ups, currency exchanges",
+   "Zara purchase and refund, Amazon.ie, Ryanair one-offs",
+   "the DECLINED Strava attempt on 2026-04-16"
+  ]
+ },
+ "nl-ing-style.csv": {
+  "rows": 152,
+  "recurring": [
+   {
+    "merchant": "Ziggo",
+    "cadence": "monthly",
+    "amounts": [
+     52.5,
+     52.5,
+     52.5,
+     52.5,
+     52.5,
+     52.5,
+     54.75,
+     54.75,
+     54.75,
+     54.75
+    ],
+    "count": 10,
+    "first": "2026-01-26",
+    "last": "2026-10-26",
+    "active_at_end": true,
+    "price_rise": true,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "ZIGGO SERVICES B.V. | Naam: ZIGGO SERVICES B.V. Omschrijving: Factuur 434261296 Klantnr 30214877 2026-01 IBAN: NL55DEUT0973310308 Kenmerk: 630297251242 Machtiging ID: ZG-30214877-01 Incassant ID: NL56ZZZ302148770000 Doorlopende incasso Datum/Tijd: 26-01-2026 02:56",
+     "ZIGGO SERVICES B.V. | Naam: ZIGGO SERVICES B.V. Omschrijving: Factuur 593949587 Klantnr 30214877 2026-02 IBAN: NL22RABO0725629140 Kenmerk: 130134017378 Machtiging ID: ZG-30214877-01 Incassant ID: NL56ZZZ302148770000 Doorlopende incasso Datum/Tijd: 25-02-2026 04:10",
+     "Ziggo Services BV | Naam: Ziggo Services BV Omschrijving: Factuur 013247580 Klantnr 30214877 2026-03 IBAN: NL51ABNA0554799907 Kenmerk: 879855222924 Machtiging ID: ZG-30214877-01 Incassant ID: NL56ZZZ302148770000 Doorlopende incasso Datum/Tijd: 25-03-2026 02:58",
+     "Ziggo Services BV | Naam: Ziggo Services BV Omschrijving: Factuur 253033569 Klantnr 30214877 2026-04 IBAN: NL52RABO0960254496 Kenmerk: 101157858508 Machtiging ID: ZG-30214877-01 Incassant ID: NL56ZZZ302148770000 Doorlopende incasso Datum/Tijd: 27-04-2026 01:22"
+    ]
+   },
+   {
+    "merchant": "Odido mobile",
+    "cadence": "monthly",
+    "amounts": [
+     20.0,
+     20.0,
+     20.0,
+     20.0,
+     20.0,
+     20.0,
+     20.0,
+     20.0,
+     20.0,
+     20.0
+    ],
+    "count": 10,
+    "first": "2026-01-22",
+    "last": "2026-10-22",
+    "active_at_end": true,
+    "price_rise": false,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "Odido Netherlands B.V. | Naam: Odido Netherlands B.V. Omschrijving: Klantnummer 1.29988341 Factuur 5524223435 IBAN: NL21INGB0809607919 Kenmerk: 637639607319 Machtiging ID: OD0012998834 Incassant ID: NL19ZZZ270886890000 Doorlopende incasso Datum/Tijd: 22-01-2026 06:22",
+     "Odido Netherlands B.V. | Naam: Odido Netherlands B.V. Omschrijving: Klantnummer 1.29988341 Factuur 1595858148 IBAN: NL33RABO0019513891 Kenmerk: 215869495665 Machtiging ID: OD0012998834 Incassant ID: NL19ZZZ270886890000 Doorlopende incasso Datum/Tijd: 23-02-2026 03:32",
+     "ODIDO NETHERLANDS BV | Naam: ODIDO NETHERLANDS BV Omschrijving: Klantnummer 1.29988341 Factuur 6180572107 IBAN: NL51INGB0055025461 Kenmerk: 542108273031 Machtiging ID: OD0012998834 Incassant ID: NL19ZZZ270886890000 Doorlopende incasso Datum/Tijd: 23-03-2026 04:48",
+     "Odido Netherlands B.V. | Naam: Odido Netherlands B.V. Omschrijving: Klantnummer 1.29988341 Factuur 1898061734 IBAN: NL99RABO0599286645 Kenmerk: 985520585402 Machtiging ID: OD0012998834 Incassant ID: NL19ZZZ270886890000 Doorlopende incasso Datum/Tijd: 22-04-2026 02:12"
+    ]
+   },
+   {
+    "merchant": "Videoland",
+    "cadence": "monthly",
+    "amounts": [
+     8.99,
+     8.99,
+     8.99,
+     8.99,
+     8.99,
+     8.99,
+     8.99,
+     8.99,
+     8.99,
+     8.99
+    ],
+    "count": 10,
+    "first": "2026-01-07",
+    "last": "2026-10-07",
+    "active_at_end": true,
+    "price_rise": false,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "RTL Nederland Interactief B.V. | Naam: RTL Nederland Interactief B.V. Omschrijving: VL69102807 Videoland Basis IBAN: NL72INGB0011559344 Kenmerk: 318884448946 Machtiging ID: VL7783321 Incassant ID: NL77ZZZ330311430000 Doorlopende incasso Datum/Tijd: 07-01-2026 05:25",
+     "RTL Nederland Interactief B.V. | Naam: RTL Nederland Interactief B.V. Omschrijving: Videoland abonnement IBAN: NL51RABO0705585531 Kenmerk: 388314807666 Machtiging ID: VL7783321 Incassant ID: NL77ZZZ330311430000 Doorlopende incasso Datum/Tijd: 09-02-2026 03:54",
+     "RTL Nederland Interactief B.V. | Naam: RTL Nederland Interactief B.V. Omschrijving: VL55925389 Videoland Basis IBAN: NL78INGB0313248423 Kenmerk: 827106379638 Machtiging ID: VL7783321 Incassant ID: NL77ZZZ330311430000 Doorlopende incasso Datum/Tijd: 09-03-2026 05:26",
+     "RTL Nederland Interactief B.V. | Naam: RTL Nederland Interactief B.V. Omschrijving: Videoland abonnement IBAN: NL29INGB0946699219 Kenmerk: 194209482445 Machtiging ID: VL7783321 Incassant ID: NL77ZZZ330311430000 Doorlopende incasso Datum/Tijd: 07-04-2026 03:56"
+    ],
+    "note": "Same price and cadence (8,99 monthly) as Disney+; billed by RTL Nederland."
+   },
+   {
+    "merchant": "Disney+ (via PayPal)",
+    "cadence": "monthly",
+    "amounts": [
+     8.99,
+     8.99,
+     8.99,
+     8.99,
+     8.99,
+     8.99,
+     8.99,
+     8.99,
+     8.99,
+     8.99
+    ],
+    "count": 10,
+    "first": "2026-01-12",
+    "last": "2026-10-12",
+    "active_at_end": true,
+    "price_rise": false,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "PayPal Europe S.a.r.l. et Cie S.C.A | Naam: PayPal Europe S.a.r.l. et Cie S.C.A Omschrijving: 1048775791304 Aankoop bij Disney Plus IBAN: NL81ABNA0036133124 Kenmerk: 030038498164 Machtiging ID: 5J2P22KZ7QXCA Incassant ID: LU96ZZZ0000000000000000058 Doorlopende incasso Datum/Tijd: 12-01-2026 05:28",
+     "PayPal Europe S.a.r.l. et Cie S.C.A | Naam: PayPal Europe S.a.r.l. et Cie S.C.A Omschrijving: 1048325244061 Aankoop bij Disney Plus IBAN: NL29DEUT0682484493 Kenmerk: 872216719714 Machtiging ID: 5J2P22KZ7QXCA Incassant ID: LU96ZZZ0000000000000000058 Doorlopende incasso Datum/Tijd: 12-02-2026 03:39",
+     "PayPal Europe S.a.r.l. et Cie S.C.A | Naam: PayPal Europe S.a.r.l. et Cie S.C.A Omschrijving: 1048440724537 Aankoop bij Disney Plus IBAN: NL85INGB0810902498 Kenmerk: 097375715320 Machtiging ID: 5J2P22KZ7QXCA Incassant ID: LU96ZZZ0000000000000000058 Doorlopende incasso Datum/Tijd: 12-03-2026 01:30",
+     "PayPal Europe S.a.r.l. et Cie S.C.A | Naam: PayPal Europe S.a.r.l. et Cie S.C.A Omschrijving: 2360303089351 PAYPAL DISNEY PLUS IBAN: NL68RABO0202990941 Kenmerk: 795755387874 Machtiging ID: 5J2P22KZ7QXCA Incassant ID: LU96ZZZ0000000000000000058 Doorlopende incasso Datum/Tijd: 13-04-2026 02:51"
+    ],
+    "note": "Debtor name is PayPal; the service is named only in some months' description."
+   },
+   {
+    "merchant": "Nintendo Switch Online",
+    "cadence": "quarterly",
+    "amounts": [
+     7.99,
+     7.99,
+     7.99,
+     7.99
+    ],
+    "count": 4,
+    "first": "2026-01-19",
+    "last": "2026-10-19",
+    "active_at_end": true,
+    "price_rise": false,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "Nintendo of Europe | Pasvolgnr: 004 19-01-2026 09:59 Transactie: VQ320K Term: EXNR0RHE Google Pay",
+     "NINTENDO EUROPE GMBH | Pasvolgnr: 004 20-04-2026 14:21 Transactie: JFYEH4 Term: ZEC9QXS2 Google Pay",
+     "Nintendo of Europe | Pasvolgnr: 004 20-07-2026 19:06 Transactie: UA7F10 Term: 5A3E6H9J Google Pay",
+     "Nintendo of Europe | Pasvolgnr: 004 19-10-2026 22:27 Transactie: FUHJCB Term: PMRSN0K2 Apple Pay"
+    ],
+    "note": "3-month plan; the April renewal was charged twice."
+   },
+   {
+    "merchant": "Storytel",
+    "cadence": "monthly",
+    "amounts": [
+     12.99,
+     12.99,
+     12.99,
+     12.99
+    ],
+    "count": 4,
+    "first": "2026-01-05",
+    "last": "2026-04-03",
+    "active_at_end": false,
+    "price_rise": false,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "Storytel B.V. | Naam: Storytel B.V. Omschrijving: Storytel abonnement 01-2026 IBAN: NL89DEUT0195159997 Kenmerk: 038928173433 Machtiging ID: ST-882140 Incassant ID: NL24ZZZ551206610000 Doorlopende incasso Datum/Tijd: 05-01-2026 04:45",
+     "Storytel B.V. | Naam: Storytel B.V. Omschrijving: Storytel abonnement 02-2026 IBAN: NL72INGB0443712452 Kenmerk: 068794621268 Machtiging ID: ST-882140 Incassant ID: NL24ZZZ551206610000 Doorlopende incasso Datum/Tijd: 03-02-2026 03:24",
+     "Storytel B.V. | Naam: Storytel B.V. Omschrijving: Storytel abonnement 03-2026 IBAN: NL46DEUT0755511871 Kenmerk: 790103906148 Machtiging ID: ST-882140 Incassant ID: NL24ZZZ551206610000 Doorlopende incasso Datum/Tijd: 03-03-2026 06:25",
+     "Storytel B.V. | Naam: Storytel B.V. Omschrijving: Storytel abonnement 04-2026 IBAN: NL90RABO0856999203 Kenmerk: 056148989458 Machtiging ID: ST-882140 Incassant ID: NL24ZZZ551206610000 Doorlopende incasso Datum/Tijd: 03-04-2026 01:48"
+    ]
+   },
+   {
+    "merchant": "Patreon (billed in USD)",
+    "cadence": "monthly",
+    "amounts": [
+     5.52,
+     5.44,
+     5.39,
+     5.37,
+     5.49,
+     5.63,
+     5.58,
+     5.78,
+     5.61,
+     5.7
+    ],
+    "count": 10,
+    "first": "2026-01-02",
+    "last": "2026-10-01",
+    "active_at_end": true,
+    "price_rise": false,
+    "trial_converted": false,
+    "descriptor_examples": [
+     "Patreon* Membership | Pasvolgnr: 004 02-01-2026 07:37 Transactie: A6RTF1 Term: SH4FTES8 Valuta: 6,00 USD Koers: 1,118269 Opslag: 0,15 EUR",
+     "Patreon | Pasvolgnr: 004 02-02-2026 11:24 Transactie: 731WMR Term: XHQYH3B5 Valuta: 6,00 USD Koers: 1,134720 Opslag: 0,15 EUR",
+     "PATREON MEMBERSHIP | Pasvolgnr: 004 02-03-2026 18:33 Transactie: WJ2ME6 Term: ZQSYL7WM Valuta: 6,00 USD Koers: 1,145068 Opslag: 0,15 EUR",
+     "Patreon | Pasvolgnr: 004 01-04-2026 13:09 Transactie: 6N8U1R Term: QWN8MK3G Valuta: 6,00 USD Koers: 1,150147 Opslag: 0,15 EUR"
+    ],
+    "note": "USD 6.00 converted to EUR (Valuta/Koers in Mededelingen), so the amount wobbles; not a price rise."
+   }
+  ],
+  "duplicates": [
+   {
+    "merchant": "Nintendo Switch Online",
+    "date": "2026-04-21",
+    "amount": 7.99,
+    "descriptor": "Nintendo eShop | Pasvolgnr: 004 21-04-2026 19:01 Transactie: SEEN4S Term: 01DTUYNJ"
+   }
+  ],
+  "not_subscriptions": [
+   "Albert Heijn / Jumbo / Lidl groceries (varying amounts)",
+   "rent transfer to J. de Vries (monthly 1150,00)",
+   "salary Van Dijk Logistiek BV (May includes holiday pay)",
+   "Eneco energy direct debit (monthly, amount varies - utility)",
+   "Cafe de Klos (repeated restaurant)",
+   "Shell fuel",
+   "Apotheek Overtoom (roughly quarterly, 14,20-15,05)",
+   "SportCity day pass (Dagpas) bought three times",
+   "Thuisbezorgd food orders",
+   "bol.com purchase and refund, Coolblue one-off",
+   "Tikkie incoming payments"
+  ]
+ }
+}

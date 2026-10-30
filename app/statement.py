@@ -28,13 +28,20 @@ class StatementError(ValueError):
 
 
 DATE_HEADERS = ("data contabile", "data operazione", "data", "posting date", "transaction date", "date",
-                "datum", "buchungstag", "booking date", "fecha")
+                "datum", "buchungstag", "booking date", "fecha", "completed date", "started date", "date opération",
+                "date operation", "fecha operación", "fecha operacion")
 VALUE_DATE = ("data valuta", "valuta", "value date", "wertstellung")
-AMOUNT_HEADERS = ("importo", "amount", "betrag", "betrag (eur)", "amount (eur)", "money out/in", "importe")
-DEBIT_HEADERS = ("addebiti", "uscite", "dare", "debit", "debits", "money out", "paid out", "soll", "ausgang")
-CREDIT_HEADERS = ("accrediti", "entrate", "avere", "credit", "credits", "money in", "paid in", "haben", "eingang")
+AMOUNT_HEADERS = ("importo", "amount", "betrag", "betrag (eur)", "amount (eur)", "money out/in", "importe", "bedrag",
+                  "montant", "bedrag (eur)", "montant (eur)")
+DEBIT_HEADERS = ("addebiti", "uscite", "dare", "debit", "debits", "money out", "paid out", "soll", "ausgang", "débit",
+                 "debito", "cargo")
+CREDIT_HEADERS = ("accrediti", "entrate", "avere", "credit", "credits", "money in", "paid in", "haben", "eingang",
+                  "crédit", "credito", "abono")
+DIRECTION = ("af bij", "af/bij", "debit/credit", "credit/debit", "dr/cr", "cr/dr", "soll/haben")  # "Af" = out
+STATE = ("state", "status")  # Revolut writes DECLINED and REVERTED rows that never took money
 TEXT_HEADERS = ("descrizione", "causale", "description", "details", "name", "payee", "merchant", "empfänger",
-                "verwendungszweck", "beschreibung", "concepto", "descrizione operazione", "counterparty", "notes")
+                "verwendungszweck", "beschreibung", "concepto", "descrizione operazione", "counterparty", "notes",
+                "libellé", "libelle", "naam / omschrijving", "omschrijving", "mededelingen", "naam")
 
 
 def _decode(data: bytes) -> str:
@@ -69,7 +76,7 @@ def parse_amount(raw: str) -> Decimal | None:
 
 
 _DATE_FORMATS = ("%Y-%m-%d", "%d/%m/%Y", "%m/%d/%Y", "%d.%m.%Y", "%d-%m-%Y", "%d/%m/%y", "%m/%d/%y", "%Y/%m/%d",
-                 "%d.%m.%y", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d %H:%M:%S", "%d %b %Y", "%d/%m/%Y %H:%M")
+                 "%d.%m.%y", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d %H:%M:%S", "%d %b %Y", "%d/%m/%Y %H:%M", "%Y%m%d")
 
 
 def _date_format(values: list[str]) -> str | None:
@@ -104,16 +111,15 @@ def read(data: bytes) -> list[Txn]:
     lines = [ln for ln in text.splitlines() if ln.strip()]
     if not lines:
         raise StatementError("The file is empty.")
-    sample = "\n".join(lines[:20])
-    try:
-        dialect = csv.Sniffer().sniff(sample, delimiters=";,\t|")
-    except csv.Error:
-        dialect = csv.excel
-    rows = list(csv.reader(io.StringIO("\n".join(lines)), dialect))
-    # Some banks put a few lines of account details above the table: the header is the first row that
-    # names a date column and an amount (or debit) column.
-    start = next((i for i, r in enumerate(rows[:30]) if _find(r, DATE_HEADERS) is not None and
-                  (_find(r, AMOUNT_HEADERS) is not None or _find(r, DEBIT_HEADERS) is not None)), None)
+    # Some banks put a few lines of account details above the table, which confuses delimiter sniffing:
+    # try each delimiter, and take the first row that names a date column and an amount (or debit) column.
+    rows, start = [], None
+    for delim in ";,\t|":
+        rows = list(csv.reader(io.StringIO("\n".join(lines)), delimiter=delim))
+        start = next((i for i, r in enumerate(rows[:30]) if _find(r, DATE_HEADERS) is not None and
+                      (_find(r, AMOUNT_HEADERS) is not None or _find(r, DEBIT_HEADERS) is not None)), None)
+        if start is not None:
+            break
     if start is None:
         raise StatementError("I could not find the date and amount columns. Is this a bank statement export?")
     header, body = rows[start], [r for r in rows[start + 1:] if any(c.strip() for c in r)]
@@ -121,6 +127,7 @@ def read(data: bytes) -> list[Txn]:
     if _find(header, VALUE_DATE) == d_col:  # "Data valuta" matched "data": prefer the booking date
         d_col = _find([h if i != d_col else "" for i, h in enumerate(header)], DATE_HEADERS) or d_col
     a_col, debit_col, credit_col = _find(header, AMOUNT_HEADERS), _find(header, DEBIT_HEADERS), _find(header, CREDIT_HEADERS)
+    dir_col, state_col = _find(header, DIRECTION), _find(header, STATE)
     text_cols = [i for i, h in enumerate(header) if h.strip().lower() in TEXT_HEADERS]
     if not text_cols:
         text_cols = [i for i, h in enumerate(header) if any(h.strip().lower().startswith(n) for n in TEXT_HEADERS)]
@@ -145,10 +152,17 @@ def read(data: bytes) -> list[Txn]:
             day = datetime.strptime(r[d_col].strip(), fmt).date()
         except ValueError:
             continue
+        if state_col is not None and state_col < len(r) and r[state_col].strip().upper() in ("DECLINED", "REVERTED", "FAILED", "CANCELLED", "PENDING"):
+            continue
         desc = " · ".join(dict.fromkeys(r[i].strip() for i in text_cols if i < len(r) and r[i].strip()))
         if a_col is not None and a_col < len(r) and r[a_col].strip():
             value = parse_amount(r[a_col])
             if value is None:
+                continue
+            if dir_col is not None and dir_col < len(r) and r[dir_col].strip():
+                # An unsigned amount with a separate direction column: "Af" / "Debit" / "D" is money out.
+                out_ = r[dir_col].strip().lower() in ("af", "debit", "d", "dr", "db", "soll", "s")
+                out.append(Txn(day, abs(value) if out_ else -abs(value), desc, n))
                 continue
             signed.append((n, day, value, desc))
         else:

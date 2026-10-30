@@ -24,7 +24,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from app import service  # noqa: E402
+from app import service, statement  # noqa: E402
 
 EVAL = ROOT / "eval"
 _SKIP = {"via", "billed", "the", "and", "inc", "plus", "subs", "mobile", "code", "editor", "refills", "razor"}
@@ -51,7 +51,11 @@ def score(gold: dict, ghost: dict) -> int:
 
 def check(file: str, gold: dict, use_model: bool) -> dict:
     t0 = time.time()
-    result = service.analyse((EVAL / "statements" / file).read_bytes(), use_model=use_model)
+    try:
+        result = service.analyse((EVAL / "statements" / file).read_bytes(), use_model=use_model)
+    except statement.StatementError as e:  # an unreadable file counts as every subscription missed
+        print(f"\n{file}: could not read it: {e}")
+        result = {"ghosts": [], "duplicates": [], "model": {"used": False, "name": None}}
     seconds = time.time() - t0
     owner: dict[int, list[int]] = {}  # gold index -> ghost indexes
     false_alarms = []
@@ -86,11 +90,14 @@ def check(file: str, gold: dict, use_model: bool) -> dict:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", action="store_true", help="use the configured model to name merchants")
+    ap.add_argument("--set", default="eval", help="eval (the tuning set) or eval/heldout (made without seeing the code)")
     ap.add_argument("--json", type=Path, help="also write the full results here")
     args = ap.parse_args()
     if not args.model:
         import os
         os.environ["GHOST_NO_MODEL"] = "1"
+    global EVAL
+    EVAL = ROOT / args.set
     gold = json.loads((EVAL / "gold.json").read_text())
     out = [check(f, g, args.model) for f, g in gold.items()]
     total = {k: 0 for k in ("subs", "found", "split", "named", "active", "rise", "trial", "false", "dup", "dup_found", "dup_reported")}

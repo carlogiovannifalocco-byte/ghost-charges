@@ -1,0 +1,60 @@
+
+fr-credit-agricole-style.csv  (0.0s)
+  ✓ Canal+                                     as Prlv                      splitwrong-named wrong-rise
+  ✓ Free Mobile                                as Prlv                      wrong-named
+  ✓ Deezer                                     as Cb Deezer                 
+  ✓ Apple iCloud+                              as Cb Apple                  
+  ✓ Apple Music                                as Cb Apple                  
+  ✓ Amazon Prime                               as Cb Amazon                 
+  ✓ Basic-Fit                                  as Prlv                      wrong-named
+  ✓ ChatGPT Plus (OpenAI, billed in USD)       as Cb Openai                 split
+  ! false alarm: Vir Sepa (monthly, 890.00)
+  ! false alarm: Cb Pharmacie (quarterly, 21.30)
+  doubles: 1/1 found, 1 reported
+
+es-santander-style.csv  (0.0s)
+  ✓ Movistar (Telefonica)                      as Recibo                    wrong-named wrong-rise
+  ✓ Filmin                                     as Compra                    wrong-named wrong-trial
+  ✓ Google One                                 as Compra                    wrong-named
+  ✓ Duolingo Super (via Google Play)           as Compra                    wrong-named
+  ✓ PlayStation Plus                           as Compra                    wrong-named
+  ✓ Glovo Prime                                as Pago                      wrong-named
+  ✗ HBO Max                                    missed                       
+  ✗ El Pais (digital subscription)             missed                       
+  ! false alarm: Transferencia (monthly, 850.00)
+  ! false alarm: Pago (quarterly, 9.00)
+  doubles: 0/1 found, 1 reported
+
+ie-revolut-style.csv  (0.0s)
+  ✗ HelloFresh                                 missed                       
+  ✓ Uber One                                   as Uber                      
+  ✓ Midjourney (billed in USD)                 as Midjourney                wrong-rise
+  ✗ Xbox Game Pass                             missed                       
+  ✗ Microsoft 365 Personal                     missed                       
+  ✓ Revolut Premium plan                       as Premium                   
+  ✓ Strava                                     as Strava                    
+  ! false alarm: To Aoife (monthly, 1400.00)
+  ! false alarm: Boots (quarterly, 16.49)
+  doubles: 1/1 found, 1 reported
+
+nl-ing-style.csv  (0.1s)
+  ✓ Ziggo                                      as Ziggo                     wrong-rise
+  ✓ Odido mobile                               as Odido                     
+  ✓ Videoland                                  as Rtl Nederland             wrong-named
+  ✓ Disney+ (via PayPal)                       as Naam                      wrong-named
+  ✓ Nintendo Switch Online                     as Nintendo                  
+  ✓ Storytel                                   as Storytel                  
+  ✓ Patreon (billed in USD)                    as Patreon                   
+  ! false alarm: Vries (monthly, 1150.00)
+  ! false alarm: Apotheek (quarterly, 15.05)
+  doubles: 1/1 found, 1 reported
+
+== rules only ==
+subscriptions found   25/30
+shown twice (split)   2
+named right           14/25
+active/stopped right  25/25
+price rise right      21/25
+trial right           24/25
+false alarms          8
+doubles found         3/4 (4 reported)
