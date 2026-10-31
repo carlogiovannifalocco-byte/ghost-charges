@@ -38,6 +38,7 @@ def config() -> dict:
         "timeout": float(os.getenv("LLM_TIMEOUT", "600")),
         "min_interval": float(os.getenv("LLM_MIN_INTERVAL", "0")),
         "batch": int(os.getenv("LLM_BATCH", "10")),
+        "retry_wait": float(os.getenv("LLM_RETRY_WAIT", "20")),
     }
 
 
@@ -137,9 +138,15 @@ def name_merchants(groups: dict[str, list[str]]) -> tuple[dict[str, dict], dict]
     for i in range(0, len(keys), cfg["batch"]):
         chunk = keys[i:i + cfg["batch"]]
         items = "\n".join(f"{k}: " + " | ".join(groups[k][:3]) for k in chunk)
-        try:
-            answer = parse_json(_chat(PROMPT.format(kinds=", ".join(KINDS), items=items)))
-        except (httpx.HTTPError, KeyError, ValueError):
+        answer = None
+        for attempt in range(2):  # free hosted tiers refuse a burst: wait once and try the batch again
+            try:
+                answer = parse_json(_chat(PROMPT.format(kinds=", ".join(KINDS), items=items)))
+                break
+            except (httpx.HTTPError, KeyError, ValueError):
+                if attempt == 0 and not runs_locally():
+                    time.sleep(cfg["retry_wait"])
+        if answer is None:
             stats["errors"] += len(chunk)
             continue
         folded = {_letters(str(a)): v for a, v in answer.items()}  # keys come back in another case or spacing
