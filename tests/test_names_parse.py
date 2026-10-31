@@ -20,3 +20,19 @@ def test_keys_match_whatever_their_case(monkeypatch):
     monkeypatch.setattr(names, "_chat", lambda prompt: '{"netflix com": {"merchant": "Netflix", "kind": "subscription"}}')
     named, stats = names.name_merchants({"NETFLIX COM": ["PAGAMENTO POS NETFLIX.COM"]})
     assert named["NETFLIX COM"]["merchant"] == "Netflix" and stats["named"] == 1
+
+
+def test_a_refused_batch_is_tried_again_on_hosted_endpoints(monkeypatch):
+    calls = []
+
+    def chat(prompt):
+        calls.append(1)
+        if len(calls) == 1:
+            raise names.httpx.HTTPError("429")
+        return '{"NETFLIX": {"merchant": "Netflix", "kind": "subscription"}}'
+
+    monkeypatch.setattr(names, "_chat", chat)
+    monkeypatch.setenv("LLM_BASE_URL", "https://example.test/v1")
+    monkeypatch.setenv("LLM_RETRY_WAIT", "0")
+    named, stats = names.name_merchants({"NETFLIX": ["NETFLIX.COM"]})
+    assert named["NETFLIX"]["merchant"] == "Netflix" and stats["errors"] == 0 and len(calls) == 2
